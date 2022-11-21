@@ -15,7 +15,7 @@ app.use(cookieParser())
 app.use(session({
     secret:'thisismysecretkey',
     saveUninitialized:true,
-    cookie:{maxAge:777777},
+    cookie:{maxAge:777777}, 
     resave: false
 }))
 app.use((req, res, next) => {
