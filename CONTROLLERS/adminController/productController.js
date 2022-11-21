@@ -7,11 +7,11 @@ const fs = require('fs')
 
 module.exports = {
     productGet: async (req, res) => {
-        const productDetails = await products.find({}).lean()
+        const productDetails = await products.find().lean()
         res.render('admin/products', { admin: true, data: productDetails,product:true })
     },
     addProductGet: async (req, res) => {
-        const categoryDetails = await categories.find({}).lean()
+        const categoryDetails = await categories.find({status:{$ne:false}}).lean()
         res.render('admin/addProduct', { admin: true, data: categoryDetails,product:true })
         msg = ''
     },

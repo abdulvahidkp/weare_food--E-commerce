@@ -44,7 +44,7 @@
 
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0" id="example">
                             <thead>
                                 <tr class="text-white">
                                     <th scope="col">SI No.</th>
@@ -56,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each data}}
+                                {{#each userDetails}}
                                 <tr>
                                     <td>{{inc @index}}</td>
                                     <td>{{this.name}}</td>
@@ -72,38 +72,7 @@
                         </table>
                     </div>
 
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary rounded h-100 p-4">
-                            <div class="btn-toolbar" role="toolbar">
-                                <div class="btn-group me-2" role="group" aria-label="Second group">
-                                    {{#times totalPages pageNum}}
-                                    {{#if_eq '{{pageNum}}' '{{this}}'}}
-                                    <button type="button" class="btn btn-info"><a
-                                            href="/admin/userDetails/?page={{this}}">{{this}}</a></button>
-                                    {{else}}
-                                    <button type="button" class="btn btn-secondary"><a
-                                            href="/admin/userDetails/?page={{this}}">{{this}}</a></button>
-                                    {{/if_eq}}
-                                    {{/times}}
-                                    {{!-- <button type="button" class="btn btn-secondary"><a
-                                            href="/admin/userDetails/?page=2">2</a></button>
-                                    <button type="button" class="btn btn-secondary"><a
-                                            href="/admin/userDetails/?page=3">3</a></button>
-                                    <button type="button" class="btn btn-secondary"><a
-                                            href="/admin/userDetails/?page=4">4</a></button>
-                                    <button type="button" class="btn btn-secondary"><a
-                                            href="/admin/userDetails/?page=5">5</a></button>
-                                    <button type="button" class="btn btn-secondary"><a
-                                            href="/admin/userDetails/?page=6">6</a></button>
-                                    <button type="button" class="btn btn-secondary"><a
-                                            href="/admin/userDetails/?page=7">7</a></button>
-                                    <button type="button" class="btn btn-info"><a
-                                            href="/admin/userDetails/?page=8">8</a></button> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                 </div>
             </div>
             <!-- Recent Sales End -->

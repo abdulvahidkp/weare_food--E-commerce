@@ -41,47 +41,37 @@
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h2 class="mb-0">Banner Details</h2>
-                        <form action="/admin/categories" method="post">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Add new Banner
-                            </button>
-
-                            <!-- Modal -->
-                        </form>
+                       
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0" >
                             <thead>
                                 <tr class="text-white">
-                                    <th scope="col">Photo</th>
-                                    <th scope="col">Small text</th>
-                                    <th scope="col">Main text</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col">Picture</th>
+                                    <th scope="col">Main Head</th>
+                                    <th scope="col">Sub Head</th>
+                                    <th scope="col">Small Paragraph</th>
                                     <th scope="col">Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each data}}
                                 <tr>
-                                    <td>{{@index}}</td>
-                                    <td>{{this.picture}}</td>
-                                    <td>{{this.smalltext}}</td>
-                                    <td>{{this.maintext}}</td>
-                                    <td>{{this.description}}</td>
+                                    <td><img src="{{bannerDetails.imagePath}}" width="80" alt=""></td>
+                                    <td>{{bannerDetails.subHead}}</td>
+                                    <td>{{bannerDetails.mainHead}}</td>
+                                    <td>{{bannerDetails.paragraph}}</td>
                                     <td>
                                         <a class="btn btn-sm btn-primary  ms-3"
-                                            href="/admin/categoryDelete/?id={{this._id}}"
-                                            onclick="return confirm('Are you sure?')">Delete</a>
+                                            href="/admin/addBanner"
+                                            onclick="return confirm('Are you sure?')">Change</a>
                                     </td>
                                 </tr>
-                                {{/each}}
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <p>*you can only use one banner at a time</p>
             </div>
             <!-- Recent Sales End -->
         </div>

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const categorySchema = require('./categoryModel')
 
 const productSchema = new mongoose.Schema({
     productName: {

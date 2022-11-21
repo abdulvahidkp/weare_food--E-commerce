@@ -14,7 +14,7 @@ module.exports = {
         const filePath = req.file.path
 
         let comImg = sharp(filePath)
-            .resize(900)
+            .resize(900,550)
             .jpeg({ quality: 80, chromaSubsampling: '4:4:4' })
             .toFile(compressedImageFileSavePath, async (err, info) => {
                 await fs.unlinkSync(filePath)

@@ -12,9 +12,6 @@ module.exports={
     getContact:(req,res)=>{
         res.render('user/contact',{user:true,userContact:true})
     },
-    getWishlist:(req,res)=>{
-        res.render('user/wishlist')
-    },
     getUserProfile:(req,res)=>{
         res.render('user/myProfile')
     },

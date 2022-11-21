@@ -1,6 +1,7 @@
 const users = require('../../MODEL/userModel')
 const bcrypt = require('bcrypt')
 const categorySchema = require('../../MODEL/categoryModel')
+const bannerSchema = require('../../MODEL/bannerModel')
 let msg = ''
 let logMsg = ''
 
@@ -17,11 +18,12 @@ let logMsg = ''
 
 module.exports = {
     homePage:async (req, res) => {
-        const category = await categorySchema.find({}).lean()
+        const category = await categorySchema.find({status:true}).lean()
+        const banner = await bannerSchema.findOne().lean()
         if (req.session.userId) {
-            res.render('user/userHome', { user: true, userLogin: true ,userHome:true,category})
+            res.render('user/userHome', { user: true, userLogin: true ,userHome:true,category,banner})
         } else {
-            res.render('user/userHome', { user: true ,userHome:true ,  category })
+            res.render('user/userHome', { user: true ,userHome:true ,  category ,banner})
         }
     },
     loginPage: (req, res) => {

@@ -53,7 +53,7 @@ Handlebars.registerHelper('times', function(n,p, block) {
         accum += block.fn(i);
         
     return accum;
-});
+}); 
 //handlebars if equal register
 Handlebars.registerHelper('if_eq', function(a, b, opts) {
     if (a === b) {
