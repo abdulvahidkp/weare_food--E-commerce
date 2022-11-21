@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weare Shop</title>
+    <link rel="icon" href="admin/img/Fevicon.jpg" type="image/png">
+    <link rel="stylesheet" href="/user/vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/user/vendors/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/user/vendors/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="/user/vendors/linericon/style.css">
+    <link rel="stylesheet" href="/user/vendors/nice-select/nice-select.css">
+    <link rel="stylesheet" href="/user/vendors/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/user/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/user/vendors/nouislider/nouislider.min.css">
+
+    <link rel="stylesheet" href="/user/css/style.css">
+</head>
+
+<body>
+
+    {{!-- section --}}
+    <section class="checkout_area section-margin--small">
+        <div class="container">
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a href="" class="button button-coupon float-right ">edit</a>
+                        <h3>Account Details</h3>
+
+                        <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="first" name="name" placeholder="username">
+                                <span class="placeholder" data-placeholder="First name"></span>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="email" class="form-control" id="last" name="email" placeholder="email">
+                                <span class="placeholder" data-placeholder="Last name"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" id="company" name="company"
+                                    placeholder="mobile">
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="date" class="form-control" id="number" name="dob"
+                                    placeholder="Date of birth">
+                                {{!-- <span class="placeholder" data-placeholder="Phone number"></span> --}}
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="email" name="compemailany"
+                                    placeholder="address">
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="add1" name="add1" placeholder="City">
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <select class="country_select">
+                                    <option value="1">District</option>
+                                    <option value="2">Kannur</option>
+                                    <option value="4">Kasargod</option>
+                                    <option value="4">Kozhikode</option>
+                                    <option value="4">Kochi</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <select class="country_select">
+                                    <option value="1">Select State</option>
+                                    <option value="1">Kerala</option>
+                                    <option value="2">karnataka</option>
+                                    <option value="4">Tamil Nadu</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="number" class="form-control" id="zip" name="zip"
+                                    placeholder="Postcode/ZIP">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                {{!-- <input type="radio" id="html" name="fav_language" value="HTML">
+                                <label for="html">Male</label><br>
+                                <input type="radio" id="css" name="fav_language" value="CSS">
+                                <label for="css">Female</label><br> --}}
+                                <label for=" ">Gender: </label>
+                                <input type="radio" name="gender">
+                                <label for="">female</label>
+                                <input type="radio" name="gender">
+                                <label for="">male</label>
+                            </div>
+                            <div>
+                                <a class="ml-2" href="/changePass">change password?</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    {{!-- user script --}}
+
+    <script src="/user/vendors/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/user/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/user/vendors/skrollr.min.js"></script>
+    <script src="/user/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="/user/vendors/nice-select/jquery.nice-select.min.js"></script>
+    <script src="/user/vendors/nouislider/nouislider.min.js"></script>
+    <script src="/user/vendors/jquery.ajaxchimp.min.js"></script>
+    <script src="/user/vendors/mail-script.js"></script>
+    <script src="/user/js/main.js"></script>
+    <script src="/user/vendors/jquery.form.js"></script>
+    <script src="/user/vendors/jquery.validate.min.js"></script>
+    <script src="/user/vendors/contact.js"></script>
+
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

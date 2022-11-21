@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weare Shop</title>
+    <link rel="icon" href="user/img/Fevicon.jpg" type="image/png">
+   
+</head>
+<body>
+
+    {{#if user}}
+    {{>userNavbar}}
+    {{{body}}}
+    {{>userFooter}}
+    {{else if admin}}
+    {{>adminPartial}}
+    {{{body}}}
+    {{else}}
+    {{{body}}}
+    {{/if}}
+ 
+
+
+    <!-- ====== ionicons ======= -->
+</body>
+</html>
