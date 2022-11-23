@@ -24,7 +24,7 @@
         <div class="container">
             <div class="cart_inner">
                 <div class="table-responsive">
-                    <table class="table" >
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Product</th>
@@ -35,45 +35,65 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each productsList}}
                             <tr>
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="user/img/cart/cart1.png" alt="">
+                                            <img src="{{this.image.[0]}}" width="90" height="80" alt="">
                                         </div>
                                         <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
+                                            <p>{{this.Name}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>in stock</h5>
+                                    <h5>{{this.productStock}}</h5>
                                 </td>
                                 <td>
-                                    <h5>$360.00</h5>
+                                    <h5>{{this.productPrice}}</h5>
                                 </td>
                                 <td>
                                     <a class="button button-coupon" href="#">Add to cart</a>
                                 </td>
                                 <td>
-                                    <a href="/userProfile"><i class="ti-close"></i></a>
-
+                                    <button onclick="addToWishlist('{{this._id}}')"><i class="ti-close"></i></button>
                                 </td>
                             </tr>
+                            {{/each}}
                         </tbody>
-                      <h3>{{msg}}</h3>
+                        <h3>{{msg}}</h3>
                     </table>
                 </div>
             </div>
         </div>
     </section>
 
+    <script>
+        function addToWishlist(proId) {
+            fetch('/addWishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ proId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    location.reload()
+                })
+                .catch(error => console.log(error));
+        }
 
 
-  
+    </script>
 
 
-    {{!-- user script --}} 
+
+
+
+    {{!-- user script --}}
 
     <script src="/user/vendors/jquery/jquery-3.2.1.min.js"></script>
     <script src="/user/vendors/bootstrap/bootstrap.bundle.min.js"></script>

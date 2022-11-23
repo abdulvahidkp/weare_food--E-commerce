@@ -1,18 +1,23 @@
 const categories = require('../../MODEL/categoryModel')
 const products = require('../../MODEL/productModel')
 const uploadToCloudinary = require('../../MIDDLEWARE/cloundinary')
+const mongoose = require('mongoose')
 const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs')
 
 module.exports = {
+
     productGet: async (req, res) => {
-        const productDetails = await products.find().lean()
-        res.render('admin/products', { admin: true, data: productDetails,product:true })
+        let productDetails = await products.find({}).populate({ path: 'productCategory' }).lean()
+
+        res.render('admin/products', { admin: true, data: productDetails, product: true })
+
+        // console.log(productDetails);
     },
     addProductGet: async (req, res) => {
-        const categoryDetails = await categories.find({status:{$ne:false}}).lean()
-        res.render('admin/addProduct', { admin: true, data: categoryDetails,product:true })
+        const categoryDetails = await categories.find({ status: { $ne: false } }).lean()
+        res.render('admin/addProduct', { admin: true, data: categoryDetails, product: true })
         msg = ''
     },
     addProductPost: async (req, res) => {
@@ -32,23 +37,25 @@ module.exports = {
 
             let comImg = sharp(filePath)
                 .resize(900)
-                .jpeg({ quality: 80, chromaSubsampling: '4:4:4' }) 
+                .jpeg({ quality: 80, chromaSubsampling: '4:4:4' })
                 .toFile(compressedImageFileSavePath, async (err, info) => {
                     await fs.unlinkSync(filePath)
                 })
-
-                localFilePath[i] = comImg.options.fileOut;
-                console.log(localFilePath);
+            localFilePath[i] = comImg.options.fileOut;
         };
 
-        let { name, category, stock, mrp, sellingPrice, description } = req.body;
+        let { name, productCategory, stock, mrp, sellingPrice, description } = req.body;
         const capitalize = s => s && s[0].toUpperCase() + s.slice(1)
         let editedName = capitalize(name)
 
+
         try {
+
+            let proCat = mongoose.Types.ObjectId(productCategory).toString()
+
             let newProduct = await new products({
                 productName: editedName,
-                productCategory: category,
+                productCategory: proCat,
                 productStock: stock,
                 productPrice: mrp,
                 productSellingPrice: sellingPrice,
@@ -56,13 +63,11 @@ module.exports = {
             })
 
             for (let x = 0; x < req.files.length; x++) {
-                let parent =path.basename(path.dirname(localFilePath[x]))
+                let parent = path.basename(path.dirname(localFilePath[x]))
                 const lastItem = localFilePath[x].substring(localFilePath[x].lastIndexOf('/') + 1)
-                newPath = '/'+parent+'/'+lastItem
+                newPath = '/' + parent + '/' + lastItem
 
-                console.log(newPath);
-                newProduct.image[x] =  newPath
-                console.log(newProduct.image);
+                newProduct.image[x] = newPath
             }
 
             // for (let x = 0; x < imageUrlList.length; x++) {
@@ -78,9 +83,35 @@ module.exports = {
             });
         }
     },
+    productEditGet: async (req, res) => {
+        let proId = req.params.id
+        const categoryDetails = await categories.find({ status: { $ne: false } }).lean()
+        let productDetails = await products.findOne({ _id: proId }).populate({ path: 'productCategory' }).lean()
+        res.render('admin/editProducts', { admin: true, data: productDetails, product: true, categoryDetails })
+    },
+    productEditPost: async (req, res) => {
+        let proId = req.params.id
+        console.log(req.body);
+        console.log(proId);
+        let { name, productCategory, stock, mrp, sellingPrice, description } = req.body;
+        await categories.updateOne({ _id: proId },
+            {
+                $set: {
+                    productName: name,
+                    productCategory: productCategory,
+                    productStock: stock,
+                    productPrice: mrp,
+                    productSellingPrice: sellingPrice,
+                    productDescription: description
+                }
+            })
+        
+
+        res.redirect('/admin/products')
+    },
     productDelete: async (req, res) => {
         productId = req.query.id
-        let product = await products.findByIdAndDelete(productId)
+        await products.findByIdAndDelete(productId)
         res.redirect('/admin/products')
     }
 }

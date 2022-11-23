@@ -27,8 +27,7 @@ module.exports = {
         const lastItem = localFilePath.substring(localFilePath.lastIndexOf('/') + 1)
         newPath = '/' + parent + '/' + lastItem
 
-        let category = req.body.categoryName
-        let newCategory = category.toUpperCase()
+        let newCategory = req.body.categoryName
         try {
             await categories.create({ category: newCategory ,imagePath:newPath})
             console.log('category added');

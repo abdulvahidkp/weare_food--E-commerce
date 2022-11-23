@@ -70,14 +70,21 @@
                                     <td>{{this.productName}}</td>
                                     <td><img src="{{this.image.[0]}}" alt="" width="80"></td>
                                     <td>{{this.productStock}} unit</td>
-                                    <td>{{this.productCategory}} </td>
+                                    <td>{{this.productCategory.category}} <p>{{#if this.productCategory.status}}enable
+                                            {{else}} disabled{{/if}}</p>
+                                    </td>
                                     <td>₹{{this.productPrice}}</td>
                                     <td>₹{{this.productSellingPrice}}</td>
                                     <td>{{this.productDescription}}</td>
-                                    <td><a class="btn btn-sm btn-light" href="">Edit</a></td>
+                                    {{#if this.productCategory.status}}
+                                    <td><a class="btn btn-sm btn-light" href="/admin/editProduct/{{this._id}}">Edit</a></td>
                                     <td><a class="btn btn-sm btn-primary  ms-3"
                                             href="/admin/productDelete/?id={{this._id}}"
-                                            onclick="return confirm('Are you sure?')">Delete</a></td>
+                                            onclick="return confirm('Are you sure?')">Disable</a></td>
+                                    {{else}}
+                                    <td><a class="btn btn-sm btn-">Edit</a></td>
+                                    <td><a class="btn btn-sm btn-  ms-3">Disable</a></td>
+                                    {{/if}}
                                 </tr>
                                 {{/each}}
                             </tbody>

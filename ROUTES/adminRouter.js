@@ -20,10 +20,13 @@ router.get('/products',productController.productGet)
 router.get('/addProduct',productController.addProductGet)
 router.post('/addProduct',uploadToFile.array('picture',12),productController.addProductPost)
 router.get('/productDelete',productController.productDelete)
+router.get('/editProduct/:id',productController.productEditGet)
+router.post('/editProduct/:id',productController.productEditPost)
 router.get('/banner',bannerController.bannerGet)
 router.get('/addBanner',bannerController.addBannerGet)
 router.post('/addBanner',uploadToFile.single('picture',12),bannerController.addBannerPost)
 router.get('/userDetails',userController.userGet)
+router.get('/userAction',userController.userAction)
 router.get('/logout',adminController.logout)
 
 

@@ -15,9 +15,14 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    updatedAt:{
+    blockStatus:{
+        type:Boolean,
+        default:false
+    },
+    createdAt:{
         type:Date,    
-        default:()=>Date.now()
+        default:()=>Date.now(),
+        immutable:true  
     }
 })
 

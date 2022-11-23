@@ -8,9 +8,8 @@ const productSchema = new mongoose.Schema({
         trim: true
     },
     productCategory: {
-        type: String,
-        required: true,
-        trim: true
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'categories'
     },
     productStock: {
         type: Number,
@@ -19,7 +18,6 @@ const productSchema = new mongoose.Schema({
     },
     productPrice: {
         type: Number,
-        required: true,
         trim: true,
     },
     productSellingPrice: {

@@ -48,8 +48,7 @@
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
                         <h2 class="mb-4">Product Add Page</h2>
-                        <form action="/admin/addProduct" enctype="multipart/form-data" method="post"
-                            name="productAddform" {{!-- onsubmit="return validation()" --}}>
+                        <form action="/admin/addProduct" enctype="multipart/form-data" method="post" name="productAddform" >
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput"
                                     placeholder="name@example.com" name="name" required>
@@ -57,10 +56,10 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example" name="category" required>
+                                    aria-label="Floating label select example" name="productCategory" required>
                                     <option selected value="">Product Category</option>
                                     {{#each data}}
-                                    <option value="{{this.category}}">{{this.category}}</option>
+                                    <option value="{{this._id}}">{{this.category}}</option>
                                     {{/each}}
                                 </select>
                                 <label for="floatingSelect">choose from here</label>
@@ -105,23 +104,10 @@
         </div>
     </div>
     \\
-    <script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
-    {{!-- <script type="text/javascript">
-            $('#formFileMultiple').on('change', function() {
-          
-            const size =
-            (this.files[0].size / 1024 / 1024).toFixed(2);
-          
-            if (size > 1 ) {
-                alert("File must be less than 1 MB");
-            } else {
-                $("#output").html('<b>' +
-                    'This file size is: ' + size + " MB" + '</b>');
-            }
-        });
-    </script> --}}
+
+    <script>    
 
 
     function validation(){
