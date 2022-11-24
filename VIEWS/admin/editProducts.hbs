@@ -57,7 +57,7 @@
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect"
                                     aria-label="Floating label select example" name="productCategory" >
-                                    <option selected value="{{data._id}}">{{data.productCategory.category}}</option>
+                                    <option selected value="{{data.productCategory._id}}">{{data.productCategory.category}}</option>
                                     {{#each categoryDetails}}
                                     <option value="{{this._id}}">{{this.category}}</option>
                                     {{/each}}
@@ -89,7 +89,7 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label for="formFileMultiple" class="form-label">Add Product Photos.</label>
+                                <label for="formFileMultiple" class="form-label">Edit Product Photos.</label>
                                 <input class="form-control bg-dark" type="file"
                                     accept="image/png, image/gif, image/jpeg" id="formFileMultiple" name="picture"
                                     multiple >
