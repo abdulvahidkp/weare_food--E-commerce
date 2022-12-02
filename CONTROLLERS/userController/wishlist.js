@@ -1,6 +1,7 @@
 const users = require('../../MODEL/userModel')
 const products = require('../../MODEL/productModel')
 const wishlist = require('../../MODEL/wishlistModel')
+let carts = require('../../MODEL/cartModel')
 const mongoose = require('mongoose')
 msg = ''
 
@@ -10,39 +11,42 @@ module.exports = {
         const { userId } = req.session
         let wishCount = await wishlist.find({ userId }).count()
 
+        let products = await carts.findOne({userId:userId}).populate('cartItems.productId').lean()
+        let countCart = 0;
+        if(products){
+            let productDetail = products.cartItems
+            productDetail.forEach(element => {
+              countCart += element.quantity;
+            });
+        }   
+
         if (wishCount == 0) {
             msg = 'Your wishlist is empty'
+            res.render('user/wishlist', { user: true, msg ,userLogin:true,countCart})
+            msg = ''
+        } else{
+            let wishlistList = await wishlist.findOne({ userId }).populate('productId').lean()
+            let productsList = wishlistList.productId 
+            res.render('user/wishlist', { user: true, productsList,userLogin:true,countCart})
         }
-
-        let wishlistList = await wishlist.findOne({ userId }).populate('productId').lean()
-        let productsList = wishlistList.productId
-        res.render('user/wishlist', { user: true, productsList, msg })
-        msg = ''
     },
     addWishlist: async (req, res) => {
-        console.log('---------------------------------');
         const id = req.session.userId
         let proId = mongoose.Types.ObjectId(req.body.proId).toString()
-        console.log(id);
-        console.log(proId);
         const existWishlist = await wishlist.findOne({ userId: id })
         if (existWishlist) {
-            console.log('exist wishlist');
             let products = existWishlist.productId
             let existsProduct = products.includes(proId, 0)
             if (existsProduct) {
-                console.log('product already exist so removed');
                 await wishlist.updateOne({ userId: id }, { $pull: { productId: proId } }).then((response) => {
                     res.json(response)
                 })
             } else {
-                console.log('product added to existing document');
                 await wishlist.updateOne({ userId: id }, { $push: { productId: proId } }).then((response)=>{
                     res.json(response)
-                })
+                }) 
             }
         } else {
-            console.log('new wishlist');
             await wishlist.create({ userId: id, productId: proId }).then((response)=>{
                 res.json(response)
             })

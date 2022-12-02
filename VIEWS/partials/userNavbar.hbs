@@ -26,7 +26,7 @@
     <div class="main_menu">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          <a class="navbar-brand logo_h" href="/"><img src="user/img/logo.png" style="height: 5rem;width: 5rem;"
+          <a class="navbar-brand logo_h" href="/"><img src="/user/img/logo.png" style="height: 5rem;width: 5rem;"
               alt=""></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,14 +40,7 @@
               <li class="nav-item {{#if userShop}}active{{/if}}"><a class="nav-link" href="/shop">Shop</a></li>
               <li class="nav-item {{#if userOrder}}active{{/if}}"><a class="nav-link" href="/orderDetails">Orders</a>
               </li>
-              <li class="nav-item submenu dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Pages</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
-                  <li class="nav-item"><a class="nav-link" href="tracking-order.html">Tracking</a></li>
-                </ul>
-              </li>
+              
               <li class="nav-item {{#if userContact }}active{{/if}}"><a class="nav-link " href="/contact">Contact</a>
               </li>
             </ul>
@@ -56,7 +49,7 @@
               <li class="nav-item"><a href="/userProfile"><button><i class="ti-user "></i></button></a></li>
               <li class="nav-item"><a href="/wishlist"><button><i class="ti-heart"></i></button></a></li>
               <li class="nav-item"><a href="/cart"><button><i class="ti-shopping-cart"></i><span
-                      class="nav-shop__circle">{{!-- 3 --}}</span></button></a></li>
+                      class="nav-shop__circle" id="cart-count">{{countCart}}</span></button></a></li>
               {{#if userLogin}}
               <li class="nav-item"><a class="button button-header" href="/logout">Logout</a></li>
               {{else}}

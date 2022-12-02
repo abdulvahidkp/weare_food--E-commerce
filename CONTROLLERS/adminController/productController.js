@@ -138,9 +138,9 @@ module.exports = {
 
         res.redirect('/admin/products')
     },
-    productDelete: async (req, res) => {
-        productId = req.query.id
-        await products.findByIdAndDelete(productId)
+    productAction: async (req, res) => {
+        proId = req.query.id
+        await products.updateOne({_id:proId},[ { "$set": { "productStatus": { "$eq": [false, "$productStatus"] } } } ])
         res.redirect('/admin/products')
     }
 }

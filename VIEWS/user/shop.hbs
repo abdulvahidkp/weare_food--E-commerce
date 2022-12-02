@@ -86,6 +86,23 @@
                   </ul>
                 </form>
               </div>
+               <div class="common-filter">
+                <div class="head">price</div>
+                <form action="#">
+                  <ul>
+                    <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label
+                        for="black">below ₹200<span>{{!-- (29) --}}</span></label></li>
+                    <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather"
+                        name="color"><label for="balckleather">
+                        below ₹500<span>{{!-- (29) --}}</span></label></li>
+                    <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label
+                        for="blackred">
+                        below ₹700<span>{{!-- (19) --}}</span></label></li>
+                    <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label
+                        for="gold">below ₹1000<span>{{!-- (19) --}}</span></label></li>
+                  </ul>
+                </form>
+              </div>
               {{!-- <div class="common-filter">
                 <div class="head">Price</div>
                 <div class="price-range-area">
@@ -104,12 +121,12 @@
           </div>
           <div class="col-xl-9 col-lg-8 col-md-7">
             <!-- Start Filter Bar -->
-            <div class="filter-bar d-flex flex-wrap align-items-center">
-              <div class="sorting">
-                <select>
-                  <option value="1">Default sorting</option>
-                  <option value="1">Default sorting</option>
-                  <option value="1">Default sorting</option>
+            <div class=" d-flex flex-wrap align-items-center  ">
+              <div class="sorting" >
+                <select style="border-width:0; color: grey; ">
+                  <option value="1">Default</option>
+                  <option value="1">low to high</option>
+                  <option value="1">high to low</option>
                 </select>
               </div>
               <div class="sorting mr-auto">
@@ -130,18 +147,18 @@
             </div>
             <!-- End Filter Bar -->
             <!-- Start Best Seller -->
-
             <section class="lattest-product-area pb-40 category-list">
               <div class="row">
                 {{#each productDetails}}
                 <div class="col-md-6 col-lg-4">
                   <div class="card text-center card-product">
                     <div class="card-product__img">
-                      <img class="card-img" src="{{this.image.[0]}}" alt="">
+                      <img class="card-img" width="200" height="180" src="{{this.image.[0]}}" alt="">
                       <ul class="card-product__imgOverlay">
                         <li><a href="/product/{{this._id}}"><button><i class="ti-search"></i></button></a></li>
-                        <li><button><i class="ti-shopping-cart"></i></button></li>
-                        <li><button onclick="addToWishlist('{{this._id}}')"><i class="ti-heart"></i></button></li>
+                            <li><button onclick="addToCart('{{this._id}}')"><i
+                                  class="ti-shopping-cart"></i></button></li>
+                        <li ><button onclick="addToWishlist('{{this._id}}')"><i class="ti-heart"></i></button></li>
                       </ul>
                     </div>
                     <div class="card-body">
@@ -163,121 +180,6 @@
     </section>
     <!-- ================ category section end ================= -->
 
-    <!-- ================ top product area start ================= -->
-    <section class="related-product-area">
-      <div class="container">
-        <div class="section-intro pb-60px">
-          <p>Popular Item in the market</p>
-          <h2>Top <span class="section-intro__style">Product</span></h2>
-        </div>
-        <div class="row mt-30">
-          <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-            <div class="single-search-product-wrapper">
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-1.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-2.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-3.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-            <div class="single-search-product-wrapper">
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-4.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-5.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-6.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-            <div class="single-search-product-wrapper">
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-7.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-8.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-9.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-            <div class="single-search-product-wrapper">
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-1.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-2.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-              <div class="single-search-product d-flex">
-                <a href="#"><img src="user/img/product/product-sm-3.png" alt=""></a>
-                <div class="desc">
-                  <a href="#" class="title">Gray Coffee Cup</a>
-                  <div class="price">$170.00</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- ================ top product area end ================= -->
 
     <!-- ================ Subscribe section start ================= -->
     <section class="subscribe-position">
@@ -311,43 +213,40 @@
 
     <script>
 
-
-
       function addToWishlist(proId) {
         fetch('/addWishlist', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ proId })
-        }).then(res => res.json())
-          .then(data =>{
-            console.log('success')
-          })
-          .catch(error => conodlog);
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ proId })})
+          .then(res => res.json())
+          .then(data => { console.log('success')})
+          .catch(error => {
+            console.log(err.message)
+            location.href='/login'
+      });
       }
 
     </script>
 
 
-  <script>
+    <script>
       function addWishlist() {
 
-    let title = document.getElementById('title').value
-    let body = document.getElementById('title').body
+        let title = document.getElementById('title').value
+        let body = document.getElementById('title').body
 
-    fetch('/addWishlist', {
-    method: 'POST',
-    headers: {
-    'Accept': 'application/json', 'text/plain', '*/*'
+        fetch('/addWishlist', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json', 'text/plain', '*/*'
     'Content-type': 'application/json'
     },
-    body:JSON.stringify { title: title, body: body }
+          body: JSON.stringify { title: title, body: body }
     })
-    .then((res)=> res.json())
-    .then((data)=>console.log(data ))
+    .then((res) => res.json())
+        .then((data) => console.log(data))
     }
-  </script>
+    </script>
 
 
     {{!-- user script --}}

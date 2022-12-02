@@ -79,11 +79,11 @@
                                     {{#if this.productCategory.status}}
                                     <td><a class="btn btn-sm btn-light" href="/admin/editProduct/{{this._id}}">Edit</a></td>
                                     <td><a class="btn btn-sm btn-primary  ms-3"
-                                            href="/admin/productDelete/?id={{this._id}}"
-                                            onclick="return confirm('Are you sure?')">Disable</a></td>
+                                            href="/admin/productAction/?id={{this._id}}"
+                                            onclick="return confirm('Are you sure?')">{{#if this.productStatus}}Disable{{else}}Enable{{/if}}</a></td>
                                     {{else}}
                                     <td><a class="btn btn-sm btn-">Edit</a></td>
-                                    <td><a class="btn btn-sm btn-  ms-3">Disable</a></td>
+                                    <td><a class="btn btn-sm btn-  ms-3">{{#if this.productStatus}}Disable{{else}}Enable{{/if}}</a></td>
                                     {{/if}}
                                 </tr>
                                 {{/each}}

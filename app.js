@@ -46,7 +46,7 @@ Handlebars.registerHelper("inc", function(value, options)
     return parseInt(value) + 1;
 });
 //handlears for loop register
-Handlebars.registerHelper('times', function(n,p, block) {
+Handlebars.registerHelper('times', function(n,p, block) {   
 
     var accum = '';
     for(var i = 1; i <= n; ++i)
@@ -57,13 +57,20 @@ Handlebars.registerHelper('times', function(n,p, block) {
 //handlebars if equal register
 Handlebars.registerHelper('if_eq', function(a, b, opts) {
     if (a === b) {
-        console.log('its he');
         return opts.fn(this);
     } else {
         return opts.inverse(this);
     }
 });
-
+//handlebars for multiplying 
+Handlebars.registerHelper("multiple",function(index,value){
+    return index * value;
+});
+//not equal to check
+Handlebars.registerHelper('ifnoteq', function (a, b, options) {
+    if (a != b) { return options.fn(this); }
+    return options.inverse(this);
+});
 
 app.use('/',userRouter)
 app.use('/admin',adminRouter)

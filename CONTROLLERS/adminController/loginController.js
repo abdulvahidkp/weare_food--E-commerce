@@ -39,14 +39,8 @@ module.exports = {
        
     },
     logout:async(req,res)=>{
-        req.session.destroy((error) => {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('logout successfully');
-                res.redirect('/admin');
-            }
-        })
+        req.session.admin = null
+        res.redirect('/admin');
     },
     homeGet: async (req, res) => {
         const categoryCount = await categories.find().count()

@@ -2,6 +2,9 @@ const users = require('../../MODEL/userModel')
 const bcrypt = require('bcrypt')
 const categorySchema = require('../../MODEL/categoryModel')
 const bannerSchema = require('../../MODEL/bannerModel')
+const wishlist = require('../../MODEL/wishlistModel')
+const products = require('../../MODEL/productModel')
+const carts = require('../../MODEL/cartModel')
 let otpMsg = ''
 let logMsg = ''
 let signupUser;
@@ -18,7 +21,6 @@ const nodemailer = require('nodemailer')
 //     }
 // }
 
-let newEmail;
 
 /* for otp  */
 let mailTransporter = nodemailer.createTransport({
@@ -34,13 +36,41 @@ const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
 module.exports = {
     homePage: async (req, res) => {
-        const category = await categorySchema.find({ status: true }).lean()
-        const banner = await bannerSchema.findOne().lean()
-        if (req.session.userId) {
-            res.render('user/userHome', { user: true, userLogin: true, userHome: true, category, banner })
-        } else {
-            res.render('user/userHome', { user: true, userHome: true, category, banner })
-        }
+        await products.find({}).populate({ path: 'productCategory', match: { status: true } }).lean().exec(async (err, products) => {
+            let productDetail = products.filter((products) => {
+                return products.productCategory
+            })
+            const category = await categorySchema.find({ status: true }).lean()
+            const banner = await bannerSchema.findOne().lean()
+                
+            let productDetails = productDetail.filter((product)=>{
+                return product.productStatus 
+            })
+
+            if (req.session.userId) {
+
+                let userId = req.session.userId
+                // let wishlistDetails = await wishlist.findOne({userId:userId}).populate('productId')
+                // let productsInCart = wishlistDetails.productId
+                // let countCart = productsInCart.length
+
+                let products = await carts.findOne({userId:userId}).populate('cartItems.productId').lean()
+                let countCart = 0;
+                if(products){
+                        let productDetail = products.cartItems
+                        productDetail.forEach(element => {
+                          countCart += element.quantity;
+                        });
+                    }   
+
+                res.render('user/userHome', { user: true, userLogin: true, userHome: true, category, banner,data:productDetails, countCart})
+            } else {
+                res.render('user/userHome', { user: true, userHome: true, category, banner ,data:productDetails})
+            }
+        
+        })  
+        // const category = await categorySchema.find({ status: true }).lean()
+        // const banner = await bannerSchema.findOne().lean()
     },
     loginPage: (req, res) => {
         if (req.session.userId) {
@@ -92,7 +122,7 @@ module.exports = {
         let mailDetails = {
             from: "abdulvahid1117@gmail.com",
             to: signupEmail,
-            subject: "WEARE ACCOUNT REGISTRATION",
+            subject: "WEARE_FOODS ACCOUNT REGISTRATION",
             html: `<p>YOUR OTP FOR REGISTERING IN WEARE FOODS IS ${OTP}</p>`,
         };
         
@@ -118,7 +148,6 @@ module.exports = {
     },
     otpPost: async (req, res) => {
         let { otp } = req.body
-        console.log(OTP);
         if (OTP === otp) {
             const user = await users.create({name:signupName,email:signupEmail,password:signupPassword})
             res.redirect('/login')
@@ -128,13 +157,7 @@ module.exports = {
         }
     },
     logout: async (req, res) => {
-        req.session.destroy((error) => {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('logout successfully');
-                res.redirect('/');
-            }
-        })
+        req.session.userId = null
+        res.redirect('/');
     }
 }

@@ -25,75 +25,58 @@
     <section class="cart_area">
         <div class="container">
             <div class="cart_inner">
+                <h1>order details</h1>
+                <br>
+                    {{#if orderDetails}}
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Product</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Price</th>
                                 <th scope="col"></th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Payment</th>
+                                <th scope="col">Status</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each orderDetails}}
                             <tr>
+                                <td>{{inc @index}}</td>
                                 <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="user/img/cart/cart1.png" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
+                                    <h5>{{this.date}}</h5>
                                 </td>
                                 <td>
-                                    <h5>Delivered</h5>
+                                    <h5>{{this.address.name}}</h5>
+                                    <h5>{{this.address.houseName}},</h5>
+                                    <h5>{{this.address.district}},</h5>
+                                    <h5>{{this.address.pincode}}</h5>
                                 </td>
                                 <td>
-                                    <h5>₹360.00</h5>
+                                    <h5>₹{{this.total}}</h5>
+                                </td>
+                               
+                              
+                                 <td>
+                                    <h5>{{this.paymentMethod}}</h5>
+                                </td>
+                                 <td>
+                                    <h5>{{this.status}}</h5>
                                 </td>
                                 <td>
-                                    <h5>Delivered on 19 july</h5>
-                                </td>
-                                <td>
-                                    <a class="button button-coupon" href="#">Return</a>
-
+                                    <a class="button button-coupon" href="/singleOrderDetails/{{this._id}}">View Details</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="user/img/cart/cart2.png" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>Shipping</h5>
-                                </td>
-
-
-
-
-                                <td>
-                                    <h5>₹360.00</h5>
-                                </td>
-                                <td>
-                                    <h5>Delivery on 30 august</h5>
-
-                                </td>
-                                <td>
-                                    <a class="button button-coupon " href="#">Cancel</a>
-                                </td>
-                            </tr>
+                            {{/each}}
+                           
                         </tbody>
                     </table>
                 </div>
+                {{else}}
+                <h1>There have no orders in your account</h1>
+                {{/if}}
             </div>
         </div>
     </section>

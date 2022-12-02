@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const categorySchema = require('./categoryModel')
 
 const productSchema = new mongoose.Schema({
     productName: {
@@ -28,6 +27,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    productStatus:{
+        type:Boolean,
+        default:true
     },
     image: []
 })

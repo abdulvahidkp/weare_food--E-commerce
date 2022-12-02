@@ -24,6 +24,7 @@
         <div class="container">
             <div class="cart_inner">
                 <div class="table-responsive">
+                    {{#if productsList}}
                     <table class="table">
                         <thead>
                             <tr>
@@ -40,7 +41,8 @@
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="{{this.image.[0]}}" width="90" height="80" alt="">
+                                            <img src="{{this.image.[0]}}" id="imaeg" class="" width="90" height="80"
+                                                alt="">
                                         </div>
                                         <div class="media-body">
                                             <p>{{this.Name}}</p>
@@ -48,42 +50,53 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>{{this.productStock}}</h5>
+                                    <h5>{{#if this.productStock}}In stock{{else}}out of stock{{/if}}</h5>
                                 </td>
                                 <td>
                                     <h5>{{this.productPrice}}</h5>
                                 </td>
                                 <td>
-                                    <a class="button button-coupon" href="#">Add to cart</a>
+                                    {{#if this.productStock}}
+                                    <a class="button button-coupon text-secondary"
+                                        onclick="addToCart('{{this._id}}')">Add to cart</a>
+                                    {{/if}}
                                 </td>
                                 <td>
-                                    <button onclick="addToWishlist('{{this._id}}')"><i class="ti-close"></i></button>
+                                    <i class="ti-close" onclick="removeWishlist('{{this._id}}')"></i>
                                 </td>
                             </tr>
                             {{/each}}
                         </tbody>
-                        <h3>{{msg}}</h3>
                     </table>
+                                <div class="checkout_btn_inner d-flex float-right align-items-center">
+                                    <a class="gray_btn " href="/shop">Add all product to cart</a>
+                                </div>
+                    {{/if}}
+                    <h3>{{msg}}</h3>
+                    <h1></h1>
                 </div>
             </div>
         </div>
     </section>
 
     <script>
-        function addToWishlist(proId) {
+
+        const h1 = document.querySelector('h1')
+
+        function removeWishlist(proId) {
+            const imagee = document.querySelector('#imaeg')
             fetch('/addWishlist', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ proId })
-                })
+            })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
                     location.reload()
                 })
-                .catch(error => console.log(error));
+                .catch(e => console.log(e))
+                .finally(() => console.log('all done'))
         }
 
 

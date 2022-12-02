@@ -91,12 +91,12 @@
                             <div class="mb-3">
                                 <label for="formFileMultiple" class="form-label">Edit Product Photos.</label>
                                 <input class="form-control bg-dark" type="file"
-                                    accept="image/png, image/gif, image/jpeg" id="formFileMultiple" name="picture"
+                                    accept="image/png,image/jpeg" id="formFileMultiple" name="picture" onchange="oldImageChange(event)"
                                     multiple >
                             </div>
 
                             <div>
-                                <img src="{{data.image}}" class="mb-3" width="80" alt="">
+                                <img src="{{data.image}}" class="mb-3" width="80" alt="" id="imageView">
                             </div>
                             <button type="submit" class="btn btn-success">Submit</button>
                             <button type="reset" class="btn btn-info">reset</button>
@@ -108,6 +108,11 @@
         </div>
     </div>
 
+    <script>
+        function oldImageChange(event){
+            document.getElementById('imageView').src=URL.createObjectURL(event.target.files[0])
+        }
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
