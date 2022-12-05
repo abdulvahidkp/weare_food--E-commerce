@@ -13,11 +13,15 @@ module.exports = {
             });
         }
         let userOrders = await orders.findOne({userId:userId}).lean()
-        let orderDetails = userOrders.orderDetails;
-        orderDetails.forEach(e=>{
-            date = e.createdAt
-            e.date = date.toDateString()
-        })
+        console.log(userOrders)
+        let orderDetails
+        if(userOrders){
+             orderDetails = userOrders.orderDetails;
+            orderDetails.forEach(e=>{
+                date = e.createdAt
+                e.date = date.toDateString()
+            })
+        }
         res.render('user/orderDetails', { user: true, userOrder: true, countCart ,userLogin: true,orderDetails})
     },
     getSingleOrderDetails:async (req,res)=>{

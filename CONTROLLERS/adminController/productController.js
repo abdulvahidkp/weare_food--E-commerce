@@ -35,7 +35,7 @@ module.exports = {
             const filePath = req.files[i].path
 
             let comImg = sharp(filePath)
-                .resize(900)
+                .resize(900,700)
                 .jpeg({ quality: 80, chromaSubsampling: '4:4:4' })
                 .toFile(compressedImageFileSavePath, async (err, info) => {
                     await fs.unlinkSync(filePath)
@@ -49,12 +49,14 @@ module.exports = {
 
 
         try {
-
-            let proCat = mongoose.Types.ObjectId(productCategory).toString()
+            console.log(productCategory);
+            // let proCat = mongoose.Types.ObjectId(productCategory).toString()
+            // console.log('----------');
+            // console.log(proCat);
 
             let newProduct = await new products({
                 productName: editedName,
-                productCategory: proCat,
+                productCategory: productCategory,
                 productStock: stock,
                 productPrice: mrp,
                 productSellingPrice: sellingPrice,
@@ -99,7 +101,7 @@ module.exports = {
                 let compressedImageFileSavePath = path.join(__dirname, '../../uploads', new Date().getTime() + req.files[i].originalname)
                 const filePath = req.files[i].path
                 let comImg = sharp(filePath)
-                    .resize(900)
+                    .resize(900,600)
                     .jpeg({ quality: 80, chromaSubsampling: '4:4:4' })
                     .toFile(compressedImageFileSavePath, async (err, info) => {
                         await fs.unlinkSync(filePath)

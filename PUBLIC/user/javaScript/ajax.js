@@ -150,7 +150,6 @@ $('#placeOrderForm').submit((e) => {
             if (response.codSuccess) {
                 location.href = '/confirmation'
             } else if(response.status){
-                console.log(response);
                 razorPayment(response)
             }
         }
@@ -166,10 +165,6 @@ function razorPayment(order) {
         'description': 'weare food cash transaction',
         'order_id': order.id,
         'handler': (response) => {
-            alert(response.razorpay_payment_id)
-            alert(response.razorpay_order_id)
-            alert(response.razorpay_signature)
-
             verifyPayment(response,order)
         },
         'prefill': {
@@ -189,7 +184,7 @@ function razorPayment(order) {
 
 }
 
-function  verifyPayment(payment,order){
+function verifyPayment(payment,order){
     $.ajax({
         url:'/verifyPayment',
         data:{
@@ -198,7 +193,6 @@ function  verifyPayment(payment,order){
         },
         method:'post',
         success:(response)=>{ 
-            console.log('sett');
             if(response.status){
                 location.href = '/confirmation'
             }else{
@@ -207,3 +201,18 @@ function  verifyPayment(payment,order){
         }
     })
 }
+
+
+$('#changeOrderStatus').submit((e)=>{
+    console.log('helo');
+    e.preventDefault()
+    $.ajax({
+        url:'/admin/changeOrderStatus',
+        method:'post',
+        data:$('#changeOrderStatus').serialize(),
+        success:(response) => {
+            alert('order changed successfully')
+        }
+    })
+})
+

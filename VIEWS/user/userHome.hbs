@@ -84,7 +84,7 @@
 
 
     <!--================ Hero Carousel start =================-->
-    <section class="section-margin mt-0">
+    {{!-- <section class="section-margin mt-0">
       <div class="owl-carousel owl-theme hero-carousel">
         {{#each category}}
         <div class="hero-carousel__slide">
@@ -110,7 +110,7 @@
           </a>
         </div>
       </div>
-    </section>
+    </section> --}}
     <!--================ Hero Carousel end =================-->
 
     <!-- ================ trending product section start ================= -->  
@@ -122,19 +122,15 @@
         </div>
         <div class="row">
           {{#each data}}
-          <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="col-6 col-lg-4 col-xl-3">
             <div class="card text-center card-product">
               <div class="card-product__img">
-                <img class="card-img" width="80" height="" src="{{this.image.[0]}}" alt="">
-                <ul class="card-product__imgOverlay">
-                  <li><button><i class="ti-search"></i></button></li>
-                  <li><button><i class="ti-shopping-cart"></i></button></li>
-                  <li><button><i class="ti-heart"></i></button></li>
-                </ul>
+                <img class="card-img" width="" height="" src="{{this.image.[0]}}" alt="">
+                
               </div>
               <div class="card-body">
                 <p>{{this.productCategory.category}}</p>
-                <h4 class="card-product__title"><a href="single-product.html">{{this.productName}}</a></h4>
+                <h4 class="card-product__title"><a href="/product/{{this._id}}">{{this.productName}}</a></h4>
                 <p class="card-product__price">₹{{this.productPrice}}</p>
               </div>
             </div>

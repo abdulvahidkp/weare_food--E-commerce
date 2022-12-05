@@ -3,9 +3,6 @@ const addresses = require('../../MODEL/addressModel')
 const orders = require('../../MODEL/orderModel')
 const Razorpay = require('razorpay');
 const { rejects } = require('assert');
-let addressForAnotherFunction
-let paymentMethodAnotherFunction
-let totalMethodAnotherFunction
 
 let total;
 
@@ -66,15 +63,12 @@ module.exports = {
     placeOrder: async (req, res) => {
         let userId = req.session.userId;
         let { paymentMethod, address, total } = req.body
-        addressForAnotherFunction = address;
-        paymentMethodAnotherFunction = paymentMethod;
-        totalMethodAnotherFunction = total
         if (!req.body.address || !req.body.paymentMethod) {
             res.json({ address: false, paymentMethod: false })
         } else {
             let status = paymentMethod === 'COD' ? 'placed' : 'pending'
             if (status === 'placed') {
-                let addressss = await addresses.findOne({ userId: userId }, { address: { $elemMatch: { _id : address } } });
+                let addressss = await addresses.findOne({ userId: userId }, { address: { $elemMatch: { _id: address } } });
                 addressss = addressss.address[0]
                 let cartId = await carts.findOne({ userId: userId }, { 'cartItems._id': 0 })
                 cartDetails = cartId.cartItems
@@ -87,15 +81,23 @@ module.exports = {
                 await carts.deleteOne({ userId: userId })
                 res.json({ codSuccess: true })
             } else {
-
+                let addressss = await addresses.findOne({ userId: userId }, { address: { $elemMatch: { _id: address } } });
+                addressss = addressss.address[0]
+                let cartId = await carts.findOne({ userId: userId }, { 'cartItems._id': 0 })
+                cartDetails = cartId.cartItems
+                let orderr = await orders.findOne({ userId: userId })
+                if (orderr) {
+                    await orders.updateOne({ userId: userId }, { $push: { orderDetails: { paymentMethod, address: addressss, orderItems: cartDetails, total,status } } })
+                } else {
+                    await orders.create({ userId: userId, orderDetails: { paymentMethod, address: addressss, orderItems: cartDetails, total ,status} })
+                }
+                await carts.deleteOne({ userId: userId })
                 let order = await orders.findOne({ userId: userId }, { orderDetails: { $slice: -1 } }).lean()
-
                 let options = {
                     amount: total * 100,
                     currency: 'INR',
                     receipt: '' + order.orderDetails[0]._id
                 }
-
                 razorpayInstance.orders.create(options,
                     (err, order) => {
                         if (!err)
@@ -104,18 +106,25 @@ module.exports = {
                             res.send(err);
                     }
                 )
-
             }
         }
     },
+    onlinePaymentVerify: async (req, res) => {
+        let details = req.body
+        console.log(req.body)
+        const crypto = require('crypto')
+        let hmac = crypto.createHmac('sha256', 'GwkQn36GPCizkzfcgmLcsFBN')
 
-    // addressDelete: async (req, res) => {
-    //     let userId = req.session.user
-    //     let addressId = req.params.addressId
-    //     let sttatus = await addresses.updateOne({ userId: userId, 'address._id': addressId }, { $set: { 'address.deleted': true } })
-    //     console.log(sttatus)
-    //     res.redirect('/checkout')
-    // },
+        hmac.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
+        hmac = hmac.digest('hex')
+        if (hmac == details.payment.razorpay_signature) {
+            console.log('payment successss');
+            await orders.updateOne({orderDetails:{$elemMatch:{_id:details.order.receipt}}},{'orderDetails.$.status':'placed order'})
+            res.json({ status: true })
+        } else {
+            res.json({ status: false })
+        }
+    },
     orderConfirmation: async (req, res) => {
         userId = req.session.userId
         let order = await orders.findOne({ userId: userId }, { orderDetails: { $slice: -1 } }).lean()
@@ -134,33 +143,6 @@ module.exports = {
         }
         res.render('user/confirmation', { user: true, countCart, userLogin: true, address, orderDetails, date })
     },
-    onlinePaymentVerify: async (req, res) => {
-        let userId = req.session.userId
-        let details = req.body
-        console.log(details);
-        const crypto = require('crypto')
-        let hmac = crypto.createHmac('sha256', 'GwkQn36GPCizkzfcgmLcsFBN')
-
-        hmac.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
-        hmac = hmac.digest('hex')
-        if(hmac == details.payment.razorpay_signature){
-            console.log('payment successss');
-            let addressss = await addresses.findOne({ userId: userId }, { address: { $elemMatch: { _id : addressForAnotherFunction } } });
-            addressss = addressss.address[0]
-            let cartId = await carts.findOne({ userId: userId }, { 'cartItems._id': 0 })
-            cartDetails = cartId.cartItems
-            let order = await orders.findOne({ userId: userId })
-            if (order) {
-                await orders.updateOne({ userId: userId }, { $push: { orderDetails: { paymentMethod:paymentMethodAnotherFunction, address: addressss, orderItems: cartDetails, total:totalMethodAnotherFunction } } })
-            } else {
-                await orders.create({ userId: userId, orderDetails: { paymentMethod:paymentMethodAnotherFunction, address: addressss, orderItems: cartDetails, total:totalMethodAnotherFunction } })
-            }
-            await carts.deleteOne({ userId: userId })
-            res.json({status:true})
-        }else{
-            res.json({status:false})
-        }
-    }
 }
 
 
@@ -169,3 +151,11 @@ module.exports = {
 //     payment successful
 // }
 
+
+                // addressDelete: async (req, res) => {
+                //     let userId = req.session.user
+                //     let addressId = req.params.addressId
+                //     let sttatus = await addresses.updateOne({ userId: userId, 'address._id': addressId }, { $set: { 'address.deleted': true } })
+                //     console.log(sttatus)
+                //     res.redirect('/checkout')
+                // },

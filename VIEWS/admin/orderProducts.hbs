@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" id="adminUser">
+    <meta charset="utf-8">
     <title>DarkPan - Bootstrap 5 Admin Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -32,11 +32,11 @@
     <link href="/admin/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body id="adminCategory">
 
     <div class="container-fluid position-relative d-flex p-0">
         <div class="content">
-               <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0 ">
+               <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
                 <a href="/admin/home" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-home"></i></h2>
                 </a>
@@ -45,52 +45,62 @@
                 </a>
             
             </nav>
+            <button class="btn btn-light mt-3 ms-4"><a href="/admin/orderManagement"><i
+                        class="fa fa-reply btn-light"></i></a></button>
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h2 class="mb-0">Users</h2> 
+                        <h4 class="mb-0">Ordered Products, {{data._id}}</h4>
+                        
+                        <form action="" id="changeOrderStatus">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                name="orderStatus" required>
+                                <option selected value="">{{data.status}}</option>
+                                <option value="placed order">Placed</option>
+                                <option value="Packed">Packed</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                            <input type="text" value="{{data._id}}" name="orderId" hidden>
+                            <label for="floatingSelect">change here</label>
+                            <button type="submit" value="submit" class="btn mt-1">Submit</button>
+                        </div>
+                        </form>
 
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0" id="example">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0" id="">
                             <thead>
                                 <tr class="text-white">
                                     <th scope="col">SI No.</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Status</th>
-
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Product Image</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price/product</th>
+                                    <th scope="col">Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each userDetails}}
+                                {{#each data.orderItems}}
                                 <tr>
                                     <td>{{inc @index}}</td>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.email}}</td>
-                                    <td>
-                                        {{#if this.blockStatus}}
-                                        <a class="btn btn-sm btn-info  ms-3"
-                                            href="/admin/userAction/?id={{this._id}}"
-                                            onclick="return confirm('Are you sure?')">Unblock</a>
-                                        {{else}}
-                                        <a class="btn btn-sm btn-primary  ms-3"
-                                            href="/admin/userAction/?id={{this._id}}"
-                                            onclick="return confirm('Are you sure?')">Block</a>
-                                        {{/if}}
-                                    </td>
+                                    <td>{{this.productId.productName}}</td>
+                                    <td><img src="{{this.productId.image.[0]}}" alt="productImage" width="70"></td>
+                                    <td>{{this.quantity}}</td>
+                                    <td>₹{{this.productId.productSellingPrice}}</td>
+                                    <td class="fw-bold">₹{{#multiple this.productId.productSellingPrice
+                                        this.quantity}}{{/multiple}}</td>
                                 </tr>
                                 {{/each}}
                             </tbody>
                         </table>
                     </div>
-
-
                 </div>
             </div>
             <!-- Recent Sales End -->
-
         </div>
     </div>
 

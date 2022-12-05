@@ -128,12 +128,13 @@
     outline: none;
 }
 
-.sidebar .navbar .navbar-nav .nav-link:hover,
+.sidebar /*.navbar .navbar-nav*/ .nav-link:hover,
 .sidebar .navbar .navbar-nav .nav-link.active {
     color: var(--primary);
     background: var(--dark);
     border-color: var(--primary);
 }
+
 
 .sidebar .navbar .navbar-nav .nav-link i {
     width: 40px;

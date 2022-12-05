@@ -36,6 +36,15 @@
 
     <div class="container-fluid position-relative d-flex p-0">
         <div class="content">
+               <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="/admin/home" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-home"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0 m-3" >
+                    <i class="fa fa-bars"></i>
+                </a>
+            
+            </nav>
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
@@ -43,10 +52,7 @@
                         <h2 class="mb-0">Order Management</h2>
                         <form action="/admin/categories" method="post" enctype="multipart/form-data">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Add new Category
-                            </button>
+                           
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -83,29 +89,26 @@
                         <table class="table text-start align-middle table-bordered table-hover mb-0" id="example">
                             <thead>
                                 <tr class="text-white">
-                                    <th scope="col">SI No.</th>
-                                    <th scope="col">Category Name</th>
-                                    <th scope="col">Category Image</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">ORDER ID.</th>
+                                    <th scope="col">Order Date</th>
+                                    <th scope="col">Customer address</th>
+                                    <th scope="col">Order status</th>
+                                    <th scope="col">Payment method</th>
+                                    <th scope="col">Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each data}}
+                                {{#each hell}}
+                                    {{#each this.orderDetails}}
                                 <tr>
-                                    <td>{{inc @index}}</td>
-                                    <td>{{this.category}}</td>
-                                    <td><img src="{{this.imagePath}}" alt="" width="80"></td>
-                                    <td>{{#if this.status}}
-                                        <a class="btn btn-sm btn-primary  ms-3"
-                                            href="/admin/categoryAction/?id={{this._id}}"
-                                            onclick="return confirm('Are you sure want to disable this category?')">Disable</a>
-                                        {{else}}
-                                        <a class="btn btn-sm btn-primary  ms-3"
-                                            href="/admin/categoryAction/?id={{this._id}}"
-                                            onclick="return confirm('Are you sure want to enable this category?')">Enable</a>
-                                        {{/if}}
-                                    </td>
+                                    <td><a href="/admin/orderedProductDetails/{{this._id}}">{{this._id}}</a></td>
+                                    <td>{{this.createdAt}}</td>
+                                    <td>{{this.address.houseName}}, <br> {{this.address.district}},{{this.address.state}},<br>{{this.address.pincode}}</td>
+                                    <td>{{this.status}}</td>
+                                    <td>{{this.paymentMethod}}</td>
+                                    <td>{{this.total}}</td>
                                 </tr>
+                                    {{/each}}
                                 {{/each}}
                             </tbody>
                         </table>

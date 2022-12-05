@@ -27,26 +27,85 @@
             <div class="billing_details">
                 <div class="row">
                     <div class="col-lg-12">
-                        <a href="" class="button button-coupon float-right ">edit</a>
                         <h3>Account Details</h3>
+
+                        <form action='/editUserProfile' method="post" id="userProfileEdit">
+                            <!--userEdit Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Profile
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group p_star">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder="{{user.name}}" value="{{user.name}}" required>
+                                            </div>
+                                            <div class=" form-group p_star">
+                                                <label for="mobile">Mobile no.</label>
+                                                <input type="number" class="form-control" id="mobile" name="mobile"
+                                                    placeholder="{{user.mobile}}" value="{{user.mobile}}">
+                                            </div>
+                                            <div class=" form-group">
+                                                {{!-- <input type="radio" id="html" name="fav_language" value="HTML">
+                                                <label for="html">Male</label><br>
+                                                <input type="radio" id="css" name="fav_language" value="CSS">
+                                                <label for="css">Female</label><br>--}}
+                                                <label for=" ">Gender: </label>
+                                                <input type="radio" value="female" name="gender" {{#if_eq
+                                                    user.gender 'female' }}checked{{/if_eq}}>
+                                                <label for="">female</label>
+                                                <input type="radio" value="male" name="gender" {{#if_eq
+                                                    user.gender 'male' }}checked{{/if_eq}}>
+                                                <label for="">male</label>
+                                                <input type="radio" value="other" name="gender" {{#if_eq
+                                                    user.gender 'other' }}checked{{/if_eq}}>
+                                                <label for=" ">other</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn rounded-pill btn-info"
+                                                data-dismiss="modal">Close</button>
+
+                                            <button type="submit" class="button ">confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
 
                         <form class="row contact_form" action="#" method="post" novalidate="novalidate">
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="first" name="name" placeholder="username">
+                                <input type="text" class="form-control" id="first" name="name"
+                                    placeholder="Name: {{user.name}}" readonly>
                                 <span class="placeholder" data-placeholder="First name"></span>
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="email" class="form-control" id="last" name="email" placeholder="email">
+                                <input type="email" class="form-control" id="last" name="email"
+                                    placeholder="Email: {{user.email}}" readonly>
                                 <span class="placeholder" data-placeholder="Last name"></span>
                             </div>
                             <div class="col-md-6 form-group">
-                                <input type="text" class="form-control" id="company" name="company"
-                                    placeholder="mobile">
+                                <input type="number" class="form-control" id="company" name="company"
+                                    placeholder="mobile: {{#if user.mobile}}{{user.mobile}}{{/if}}" readonly>
                             </div>
-                            <div class="col-md-6 form-group p_star">
+                            <div class="col-md-6 form-group">
+                                <input type="number" class="form-control" id="company" name="company"
+                                    placeholder="Gender:{{#if user.gender}}{{user.gender}}{{else}}Not selected{{/if}}"
+                                    readonly>
+                            </div>
+                            {{!-- <div class="col-md-6 form-group p_star">
                                 <input type="date" class="form-control" id="number" name="dob"
                                     placeholder="Date of birth">
-                                {{!-- <span class="placeholder" data-placeholder="Phone number"></span> --}}
+                                <span class="placeholder" data-placeholder="Phone number"></span>
                             </div>
                             <div class="col-md-6 form-group p_star">
                                 <input type="text" class="form-control" id="email" name="compemailany"
@@ -75,26 +134,114 @@
                             <div class="col-md-6 form-group">
                                 <input type="number" class="form-control" id="zip" name="zip"
                                     placeholder="Postcode/ZIP">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                {{!-- <input type="radio" id="html" name="fav_language" value="HTML">
-                                <label for="html">Male</label><br>
-                                <input type="radio" id="css" name="fav_language" value="CSS">
-                                <label for="css">Female</label><br> --}}
-                                <label for=" ">Gender: </label>
-                                <input type="radio" name="gender">
-                                <label for="">female</label>
-                                <input type="radio" name="gender">
-                                <label for="">male</label>
+                            </div>--}}
+
+                            {{!-- <div>
+                                <a class="ml-2" href="/changePass">change password?</a>
+                            </div> --}}
+
+                            <div class="text-center">
+                                <button type="button" class="btn rounded-pill border-secondary float-left mt-3 mb-3"
+                                    data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
                             </div>
                             <div>
-                                <a class="ml-2" href="/changePass">change password?</a>
+                                <a class="ml-2" href="/changePass"></a>
                             </div>
 
                         </form>
+
+                        <div class="row">
+                            <div class="col-lg-8">
+
+                                {{#if data}}
+                                <div class="order_box">
+                                    <h2>Adresses </h2>
+                                    {{#each data}}
+                                    <div class="payment_item">
+                                        <div class="radion_btn">
+                                            <input type="radio" id="{{this._id}}" name="address" value="{{this._id}}">
+                                            <label for="{{this._id}}">address {{inc @index}}</label>
+                                        </div>
+                                        <address>
+                                            {{this.name}}.<br>
+                                            {{this.mobile}}<br>
+                                            {{this.houseName}}<br>
+                                            {{this.district}}, {{this.state}}<br>
+                                            {{this.pincode}}
+                                        </address>
+                                        <a href="/addressDelete/{{this._id}}">delete</a>
+                                    </div>
+                                    {{/each}}
+
+
+                                </div>
+                                {{else}}
+                                <div class="order_box">
+                                    <h2>Address </h2>
+                                    <h4>There have no address. </h4>
+                                </div>
+                                {{/if}}
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <button type="button" class="btn rounded-pill border-secondary float-left mt-3 mb-3" data-toggle="modal"
+                data-target="#exampleModal">add new address</button>
+
+            <form action='/addAddressProfile' method="post">
+                <!--newAddress Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Add new
+                                    address
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group p_star">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                                        required>
+                                </div>
+                                <div class=" form-group p_star">
+                                    <input type="number" class="form-control" id="mobile" name="mobile"
+                                        placeholder="Mobile" required>
+                                </div>
+                                <div class=" form-group">
+                                    <input type="text" class="form-control" id="houseName" name="houseName"
+                                        placeholder="House name / Building name" required>
+                                </div>
+                                <div class=" form-group p_star">
+                                    <input type="text" class="form-control" id="district" name="district"
+                                        placeholder="District" required>
+                                </div>
+                                <div class=" form-group p_star">
+                                    <input type="text" class="form-control" id="state" name="state" placeholder="State"
+                                        required>
+                                </div>
+                                <div class=" form-group p_star">
+                                    <input type="number" class="form-control" id="pincode" name="pincode"
+                                        placeholder="postcode/ZIP" required>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn rounded-pill btn-info"
+                                    data-dismiss="modal">Close</button>
+
+                                <button type="submit" class="button ">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+            </form>
         </div>
     </section>
 

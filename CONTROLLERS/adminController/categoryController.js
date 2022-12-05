@@ -14,14 +14,13 @@ module.exports = {
         const filePath = req.file.path
 
         let comImg = sharp(filePath)
-            .resize(900,550)
+            .resize(900,700)
             .jpeg({ quality: 80, chromaSubsampling: '4:4:4' })
             .toFile(compressedImageFileSavePath, async (err, info) => {
                 await fs.unlinkSync(filePath)
             })
 
         localFilePath = comImg.options.fileOut;
-        console.log(localFilePath);
 
         let parent = path.basename(path.dirname(localFilePath))
         const lastItem = localFilePath.substring(localFilePath.lastIndexOf('/') + 1)

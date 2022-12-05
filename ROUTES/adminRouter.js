@@ -7,6 +7,7 @@ const bannerController = require('../CONTROLLERS/adminController/bannerControlle
 const couponController = require('../CONTROLLERS/adminController/couponController')
 const orderController = require('../CONTROLLERS/adminController/orderController')
 const uploadToFile = require('../MIDDLEWARE/multer')
+const { orderManagementGet } = require('../CONTROLLERS/adminController/orderController')
 const auth = require('../MIDDLEWARE/authentication').verifyLogin
 
 
@@ -33,6 +34,8 @@ router.get('/coupons',couponController.couponGet)
 router.post('/coupons',couponController.couponPost)
 router.get('/couponAction',couponController.couponAction)
 router.get('/orderManagement',orderController.orderManagementGet)
+router.get("/orderedProductDetails/:id",orderController.singleOrderDetails)
+router.post('/changeOrderStatus',orderController.changeOrderStatus)
 router.get('/logout',adminController.logout)
 
 module.exports = router

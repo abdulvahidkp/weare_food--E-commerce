@@ -150,7 +150,7 @@
             <section class="lattest-product-area pb-40 category-list">
               <div class="row">
                 {{#each productDetails}}
-                <div class="col-md-6 col-lg-4">
+                <div class="col-6 col-lg-4">
                   <div class="card text-center card-product">
                     <div class="card-product__img">
                       <img class="card-img" width="200" height="180" src="{{this.image.[0]}}" alt="">
@@ -173,6 +173,14 @@
                 {{/each}}
               </div>
             </section>
+            <nav aria-label="Page navigation example">
+  <ul class="pagination float-right">
+    <li class="page-item"><a class="page-link" href="/shop/?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="/shop/?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/shop/?page=3">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
             <!-- End Best Seller -->
           </div>
         </div>

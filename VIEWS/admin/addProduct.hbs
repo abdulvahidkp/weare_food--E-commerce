@@ -40,6 +40,15 @@
 
 
     <div class="content ">
+        <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+            <a href="/admin/home" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class="text-primary mb-0"><i class="fa fa-home"></i></h2>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0 m-3">
+                <i class="fa fa-bars"></i>
+            </a>
+        </nav>
+        
         <button class="btn btn-light mt-3 ms-4"><a href="/admin/products"><i
                     class="fa fa-reply btn-light"></i></a></button>
         <!-- Form Start -->
@@ -48,7 +57,8 @@
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
                         <h2 class="mb-4">Product Add Page</h2>
-                        <form action="/admin/addProduct" enctype="multipart/form-data" method="post" name="productAddform" >
+                        <form action="/admin/addProduct" enctype="multipart/form-data" method="post"
+                            name="productAddform">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput"
                                     placeholder="name@example.com" name="name" required>
@@ -90,9 +100,10 @@
                             <div class="mb-3">
                                 <label for="formFileMultiple" class="form-label">Add Product Photos.</label>
                                 <input class="form-control bg-dark" type="file"
-                                    accept="image/png, image/gif, image/jpeg" id="formFileMultiple" name="picture" multiple required>
+                                    accept="image/png, image/gif, image/jpeg" id="formFileMultiple" name="picture"
+                                    multiple required>
                             </div>
-                            
+
                             <button type="submit" class="btn btn-success">Submit</button>
                             <button type="reset" class="btn btn-info">reset</button>
 
@@ -103,52 +114,52 @@
         </div>
     </div>
     \\
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 
-    <script>    
+    <script>
 
 
-    function validation(){
-    let name= document.forms.productAddform.name.value
-    let category= document.forms.productAddform.category.value
-    let stock= document.forms.productAddform.stock.value
-    let mrp= document.forms.productAddform.mrp.value
-    let sellingPrice= document.forms.productAddform.sellingPrice.value
-    let description= document.forms.productAddform.description.value
-    let picture= document.forms.productAddform.picture.value
+        function validation() {
+            let name = document.forms.productAddform.name.value
+            let category = document.forms.productAddform.category.value
+            let stock = document.forms.productAddform.stock.value
+            let mrp = document.forms.productAddform.mrp.value
+            let sellingPrice = document.forms.productAddform.sellingPrice.value
+            let description = document.forms.productAddform.description.value
+            let picture = document.forms.productAddform.picture.value
 
-    if(name==''){
-    window.alert('please enter your name')
-    name.focus();
-    return false
-    }else if(category==''){
-    window.alert('please select category')
-    category.focus()
-    return false
-    }else if(stock==''){
-    alert('please enter how many stock are there')
-    stock.focus()
-    return false
-    }else if(mrp==''){
-    alert('please enter how much talhe mrp ')
-    mrp.focus()
-    return false
-    }else if(sellingPrice==''){
-    alert('please enter selling price')
-    sellingPrice.focus()
-    return false
-    }else if(sellingPrice>mrp){
-    alert('selling price is greater than mrp')
-    sellingPrice.focus()
-    return false
-    }else if(description==''){
-    alert('fill description correctly')
-    description.focus()
-    return false
-    }
-    return true
-    }
+            if (name == '') {
+                window.alert('please enter your name')
+                name.focus();
+                return false
+            } else if (category == '') {
+                window.alert('please select category')
+                category.focus()
+                return false
+            } else if (stock == '') {
+                alert('please enter how many stock are there')
+                stock.focus()
+                return false
+            } else if (mrp == '') {
+                alert('please enter how much talhe mrp ')
+                mrp.focus()
+                return false
+            } else if (sellingPrice == '') {
+                alert('please enter selling price')
+                sellingPrice.focus()
+                return false
+            } else if (sellingPrice > mrp) {
+                alert('selling price is greater than mrp')
+                sellingPrice.focus()
+                return false
+            } else if (description == '') {
+                alert('fill description correctly')
+                description.focus()
+                return false
+            }
+            return true
+        }
 
     </script>
 
