@@ -15,6 +15,11 @@ const couponSchema = new mongoose.Schema({
         status:{
             type:Boolean,
             default:true
+        },
+        date:{
+            type:Date,
+            default:Date.now(),
+            immutable:true
         }
 })
 

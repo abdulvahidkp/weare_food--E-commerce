@@ -42,7 +42,6 @@ module.exports = {
             })
             const category = await categorySchema.find({ status: true }).lean()
             const banner = await bannerSchema.findOne().lean()
-                
             let productDetails = productDetail.filter((product)=>{
                 return product.productStatus 
             })
@@ -54,10 +53,10 @@ module.exports = {
                 // let productsInCart = wishlistDetails.productId
                 // let countCart = productsInCart.length
 
-                let products = await carts.findOne({userId:userId}).populate('cartItems.productId').lean()
+                let cartProducts = await carts.findOne({userId:userId}).populate('cartItems.productId').lean()
                 let countCart = 0;
-                if(products){
-                        let productDetail = products.cartItems
+                if(cartProducts){
+                        let productDetail = cartProducts.cartItems
                         productDetail.forEach(element => {
                           countCart += element.quantity;
                         });

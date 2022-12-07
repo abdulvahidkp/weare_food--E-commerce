@@ -52,41 +52,9 @@
             </div>
             <div class="sidebar-filter">
               <div class="top-filter-head">Product Filters</div>
-              {{!-- <div class="common-filter">
-                <div class="head">Brands</div>
-                <form action="#">
-                  <ul>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label
-                        for="apple">Apple<span>(29)</span></label></li>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label
-                        for="asus">Asus<span>(29)</span></label></li>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label
-                        for="gionee">Gionee<span>(19)</span></label></li>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand"><label
-                        for="micromax">Micromax<span>(19)</span></label></li>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand"><label
-                        for="samsung">Samsung<span>(19)</span></label></li>
-                  </ul>
-                </form>
-              </div> --}}
+
+
               <div class="common-filter">
-                <div class="head">size</div>
-                <form action="#">
-                  <ul>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label
-                        for="black">100g<span>{{!-- (29) --}}</span></label></li>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather"
-                        name="color"><label for="balckleather">
-                        250g<span>{{!-- (29) --}}</span></label></li>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label
-                        for="blackred">
-                        500g<span>{{!-- (19) --}}</span></label></li>
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label
-                        for="gold">1kg<span>{{!-- (19) --}}</span></label></li>
-                  </ul>
-                </form>
-              </div>
-               <div class="common-filter">
                 <div class="head">price</div>
                 <form action="#">
                   <ul>
@@ -122,7 +90,7 @@
           <div class="col-xl-9 col-lg-8 col-md-7">
             <!-- Start Filter Bar -->
             <div class=" d-flex flex-wrap align-items-center  ">
-              <div class="sorting" >
+              <div class="sorting">
                 <select style="border-width:0; color: grey; ">
                   <option value="1">Default</option>
                   <option value="1">low to high</option>
@@ -137,12 +105,15 @@
                 </select> --}}
               </div>
               <div>
+                <form action="">
                 <div class="input-group filter-bar-search">
-                  <input type="text" placeholder="Search">
+                  <input type="text" placeholder="Search" name="searchProduct">
                   <div class="input-group-append">
-                    <button type="button"><i class="ti-search"></i></button>
+                    <button type="submit"><i class="ti-search"></i></button>
                   </div>
                 </div>
+
+                </form>
               </div>
             </div>
             <!-- End Filter Bar -->
@@ -156,9 +127,8 @@
                       <img class="card-img" width="200" height="180" src="{{this.image.[0]}}" alt="">
                       <ul class="card-product__imgOverlay">
                         <li><a href="/product/{{this._id}}"><button><i class="ti-search"></i></button></a></li>
-                            <li><button onclick="addToCart('{{this._id}}')"><i
-                                  class="ti-shopping-cart"></i></button></li>
-                        <li ><button onclick="addToWishlist('{{this._id}}')"><i class="ti-heart"></i></button></li>
+                        <li><button onclick="addToCart('{{this._id}}')"><i class="ti-shopping-cart"></i></button></li>
+                        <li><button onclick="addToWishlist('{{this._id}}')"><i class="ti-heart"></i></button></li>
                       </ul>
                     </div>
                     <div class="card-body">
@@ -174,13 +144,14 @@
               </div>
             </section>
             <nav aria-label="Page navigation example">
-  <ul class="pagination float-right">
-    <li class="page-item"><a class="page-link" href="/shop/?page=1">1</a></li>
-    <li class="page-item"><a class="page-link" href="/shop/?page=2">2</a></li>
-    <li class="page-item"><a class="page-link" href="/shop/?page=3">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
+              <ul class="pagination float-right">
+                {{#times pages}}
+                <li class="page-item"><a class="page-link   {{#if_eq this currentPage}}active{{/if_eq}}"
+                    href="/shop/?page={{this}}">{{this}}</a></li>
+                {{/times}}
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
             <!-- End Best Seller -->
           </div>
         </div>
@@ -190,7 +161,7 @@
 
 
     <!-- ================ Subscribe section start ================= -->
-    <section class="subscribe-position">
+    {{!-- <section class="subscribe-position">
       <div class="container">
         <div class="subscribe text-center">
           <h3 class="subscribe__title">Get Update From Anywhere</h3>
@@ -214,7 +185,7 @@
 
         </div>
       </div>
-    </section>
+    </section> --}}
     <!-- ================ Subscribe section end ================= -->
 
 
@@ -224,14 +195,15 @@
       function addToWishlist(proId) {
         fetch('/addWishlist', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ proId })})
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ proId })
+        })
           .then(res => res.json())
-          .then(data => { console.log('success')})
+          .then(data => { console.log('success') })
           .catch(error => {
             console.log(err.message)
-            location.href='/login'
-      });
+            location.href = '/login'
+          });
       }
 
     </script>
@@ -272,3 +244,21 @@
 </body>
 
 </html>
+
+
+{{!-- <div class="common-filter">
+  <div class="head">size</div>
+  <form action="#">
+    <ul>
+      <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label
+          for="black">100g<span></span></label></li>
+      <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather" name="color"><label
+          for="balckleather">
+          250g<span></span></label></li>
+      <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label for="blackred">
+          500g<span></span></label></li>
+      <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label
+          for="gold">1kg<span></span></label></li>
+    </ul>
+  </form>
+</div> --}}

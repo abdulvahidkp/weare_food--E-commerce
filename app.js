@@ -46,14 +46,12 @@ Handlebars.registerHelper("inc", function(value, options)
     return parseInt(value) + 1;
 });
 //handlears for loop register
-Handlebars.registerHelper('times', function(n,p, block) {   
-
+Handlebars.registerHelper('times', function(n, block) {
     var accum = '';
     for(var i = 1; i <= n; ++i)
         accum += block.fn(i);
-        
     return accum;
-}); 
+});
 //handlebars if equal register
 Handlebars.registerHelper('if_eq', function(a, b, opts) {
     if (a === b) {

@@ -1,4 +1,5 @@
 const categories = require('../../MODEL/categoryModel')
+const products = require('../../MODEL/productModel')
 const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs')
@@ -40,15 +41,21 @@ module.exports = {
         categoryId = req.query.id
         console.log(categoryId);
         let categoryDetail = await categories.findOne({ _id: categoryId })
-        console.log(categoryDetail);
+
+        
+
         if (categoryDetail.status === true) {
             console.log("it's here")
             categoryDetail.status = false
             await categoryDetail.save()
-        } else {
+        } else {    
             categoryDetail.status = true
             await categoryDetail.save()
         }
-        res.redirect('/admin/categories')
+
+        await products.updateMany({productCategory:categoryId},[ { "$set": { "categoryStatus": { "$eq": [false, "$categoryStatus"] } } } ]).then((resp)=>{
+            res.redirect('/admin/categories')
+        })
     }
 } 
+

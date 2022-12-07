@@ -43,6 +43,7 @@ router.post('/editUserProfile',auth,userController.editUserProfile)
 router.post('/addAddressProfile',auth,userController.addNewAddress)
 router.get('/addressDelete/:id',auth,userController.addressDelete)
 router.get('/changePass',auth,userController.getChangePass)
+router.get('/search',categoryControllers.searchProducts)
 
 
 module.exports = router; 
