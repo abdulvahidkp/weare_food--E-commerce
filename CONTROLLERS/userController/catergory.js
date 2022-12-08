@@ -4,12 +4,10 @@ let carts = require('../../MODEL/cartModel')
 
 module.exports = {
     categoryPage: async (req, res) => {
-        console.log(req.query.sort)
-        console.log(req.query.category)
         let checkLabel = 'all' 
         let currentPage = parseInt(req.query.page)-1||0
-        let query={}
-        let sortBy ={}
+        let query = {};
+        let sortBy ={}               
         if(req.query.categoryId){
             query.productCategory=req.query.categoryId
             // checkLabel = req.query.categoryId
@@ -40,6 +38,7 @@ module.exports = {
         let totalProducts = await products.find(query).lean().count()
         
         let productDetails = await products.find(query).sort(sortBy).skip((currentPage)*perPage).limit(perPage).lean()
+        
 
         const categoryDetails = await categories.find({ status: true }).lean()
         if (req.session.userId) {
@@ -56,14 +55,12 @@ module.exports = {
             if(req.query.category){
                 res.json({ user: true, categoryDetails, productDetails, userShop: true, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)) ,checkLabel})
             }else{
-
             res.render('user/shop', { user: true, categoryDetails, productDetails, userLogin: true, userShop: true, countCart, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)),checkLabel })
             }
         } else {    
             if(req.query.category){
                 res.json({ user: true, categoryDetails, productDetails, userShop: true, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)),checkLabel })
             }else{
-
                 res.render('user/shop', { user: true, categoryDetails, productDetails, userShop: true, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)),checkLabel })
             }
         }

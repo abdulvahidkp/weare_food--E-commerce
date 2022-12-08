@@ -396,43 +396,10 @@
 
 
 
-      function addToWishlist(proId) {
-        fetch('/addWishlist', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ proId })
-        })
-          .then(res => res.json())
-          .then(data => { 
-            swal("Added to wishlist",'item added', "success");
-            console.log('success') })
-          .catch(error => {
-            console.log(err.message)
-            location.href = '/login'
-          });
-      }
+     
 
     </script>
 
-
-    <script>
-      function addWishlist() {
-
-        let title = document.getElementById('title').value
-        let body = document.getElementById('title').body
-
-        fetch('/addWishlist', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json', 'text/plain', '*/*'
-    'Content-type': 'application/json'
-    },
-          body: JSON.stringify { title: title, body: body }
-    })
-    .then((res) => res.json())
-        .then((data) => console.log(data))
-    }
-    </script>
 
 
     {{!-- user script --}}

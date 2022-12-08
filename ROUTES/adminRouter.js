@@ -8,8 +8,8 @@ const couponController = require('../CONTROLLERS/adminController/couponControlle
 const orderController = require('../CONTROLLERS/adminController/orderController')
 const uploadToFile = require('../MIDDLEWARE/multer')
 const auth = require('../MIDDLEWARE/authentication').verifyLogin
-
-
+ 
+ 
  
 router.get('/',adminController.loginGet)
 router.post('/',adminController.loginPost)

@@ -8,6 +8,8 @@ const session = require('express-session')
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser')
 const fs = require('fs')
+const logger = require('morgan')
+
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
@@ -25,6 +27,7 @@ app.use((req, res, next) => {
     );
     next()
 })  
+// app.use(logger('dev'))
 mongoose.connect('mongodb://localhost/weareShop')
 
 app.use(express.static('./PUBLIC'))

@@ -1,17 +1,67 @@
+function addToWishlist(proId) {
+    fetch('/addWishlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ proId })
+    })
+      .then(res => res.json())
+      .then(data => { 
+        if(data.alreadyExist){
+          swal("Product already in wishlist")
+        }else{
+        swal("", "Product added to wishlist", "success")
+        console.log('success') }
+        })
+      .catch(error => {
+        console.log(error.message)
+        swal("You need to login first for adding product to wishlist", {
+            buttons: ["Cancel", 'Go to Login']
+          }).then((response) => {
+            if(response){
+            location.href = '/login'
+            }
+          })
+      });
+  }
+
+function removeWishlist(proId) {
+    fetch('/removeWishlist', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ proId })
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            location.reload()
+        })
+        .catch(e => console.log(e))
+        .finally(() => console.log('all done'))
+}
+
 
 
 function addToCart(proId) {
+    
     $.ajax({
         url: '/addToCart/' + proId,
         method: 'post',
         success: (response) => {
+            if(response.loginPage){
+                swal("You need to login first for adding product to cart", {
+                    buttons: ["Cancel",'Go to Login']
+                  }).then((response)=>{
+                    if(response){
+                        location.href='/login'
+                    }
+                  })
+            }
             if (response.status) {   
                 let count = $('#cart-count').html()
                 count = parseInt(count) + 1
                 $('#cart-count').html(count)
             }
         }
-
     })
 }
 
@@ -24,6 +74,13 @@ function changeQuantity(proId, count) {
         },
         method: 'POST',
         success: (response) => {
+            if(response.loginPage){
+                swal("You need to login first for adding product to cart", {
+                    buttons: ["Cancel",'Go to Login']
+                  }).then((response)=>{
+                    location.href='/login'
+                  })
+            }
             if (response.status) {
 
                 let countt = $('#cart-count').html()

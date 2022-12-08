@@ -9,7 +9,7 @@ module.exports = {
 
     getWishlist: async (req, res) => {
         const { userId } = req.session
-        let wishCount = await wishlist.find({ userId }).count()
+        let wishListExist = await wishlist.find({ userId,productId: { $exists: true, $not: {$size: 0} } }).count()
 
         let products = await carts.findOne({userId:userId}).populate('cartItems.productId').lean()
         let countCart = 0;
@@ -19,15 +19,13 @@ module.exports = {
               countCart += element.quantity;
             });
         }   
-
-        if (wishCount == 0) {
-            msg = 'Your wishlist is empty'
-            res.render('user/wishlist', { user: true, msg ,userLogin:true,countCart})
-            msg = ''
-        } else{
+        if (wishListExist) {
             let wishlistList = await wishlist.findOne({ userId }).populate('productId').lean()
             let productsList = wishlistList.productId 
             res.render('user/wishlist', { user: true, productsList,userLogin:true,countCart})
+        } else{
+            let msg = 'Your wishlist is empty'
+            res.render('user/wishlist', { user: true, msg ,userLogin:true,countCart})
         }
     },
     addWishlist: async (req, res) => {
@@ -38,9 +36,7 @@ module.exports = {
             let products = existWishlist.productId
             let existsProduct = products.includes(proId, 0)
             if (existsProduct) {
-                await wishlist.updateOne({ userId: id }, { $pull: { productId: proId } }).then((response) => {
-                    res.json(response)
-                })
+               res.json({alreadyExist:true})
             } else {
                 await wishlist.updateOne({ userId: id }, { $push: { productId: proId } }).then((response)=>{
                     res.json(response)
@@ -51,6 +47,18 @@ module.exports = {
                 res.json(response)
             })
         }
+    },
+    removeWishlist:async(req,res)=>{
+        const id = req.session.userId
+        let proId = mongoose.Types.ObjectId(req.body.proId).toString()
+        await wishlist.updateOne({ userId: id }, { $pull: { productId: proId } }).then((response) => {
+            res.json(response)
+        }) 
     }
 
 }
+
+/*  await wishlist.updateOne({ userId: id }, { $pull: { productId: proId } }).then((response) => {
+                    res.json(response)
+                }) */
+

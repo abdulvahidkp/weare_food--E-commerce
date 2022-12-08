@@ -58,8 +58,6 @@ module.exports = {
             } else {
                 res.render('user/userHome', { user: true, userHome: true, category, banner ,data:productDetails})
             }
-        
-        
         // const category = await categorySchema.find({ status: true }).lean()
         // const banner = await bannerSchema.findOne().lean()
     },
@@ -67,8 +65,13 @@ module.exports = {
         if (req.session.userId) {
             res.redirect('/')
         } else {
-            res.render('user/login', { user: true, logMsg })
-            logMsg = ''
+            var isAjaxRequest = req.xhr;
+            if(isAjaxRequest){
+                res.json({loginPage:true})
+            }else{
+                res.render('user/login', { user: true, logMsg })
+                logMsg = ''
+            }
         }
     },
     postLoginPage: async (req, res) => {
