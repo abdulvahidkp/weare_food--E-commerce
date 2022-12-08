@@ -4,19 +4,43 @@ let carts = require('../../MODEL/cartModel')
 
 module.exports = {
     categoryPage: async (req, res) => {
-
+        console.log(req.query.sort)
+        console.log(req.query.category)
+        let checkLabel = 'all' 
         let currentPage = parseInt(req.query.page)-1||0
-        let search = req.query.searchProduct||''
-        
+        let query={}
+        let sortBy ={}
+        if(req.query.categoryId){
+            query.productCategory=req.query.categoryId
+            // checkLabel = req.query.categoryId
+        }
+        if(req.query.sort){
+            if(req.query.sort != 'default'){
+                sortBy.productSellingPrice = req.query.sort
+            }else{
+                sortBy._id = -1
+            }
+        }else{
+            sortBy._id = -1
+        }
+        query.productStatus = true;
+        query.categoryStatus = true;
+        if(req.query.category){
+            if(req.query.category != 'all'){
+                query.productCategory=req.query.category
+                checkLabel = req.query.category
+            }
+        }
+        if(req.query.searchProduct){ 
+            query.$or=[
+                { productName:{$regex:'.*'+req.query.searchProduct+'.*',$options:'i'}}
+              ]
+        }
         const perPage = 6;
-        let productsss = await products.find({ productStatus: true, categoryStatus: true  ,$or:[
-            { productName:{$regex:'.*'+search+'.*',$options:'i'}}
-          ]}).lean()
-        let totalProducts = productsss.length
+        let totalProducts = await products.find(query).lean().count()
         
-        let productDetails = await products.find({ productStatus: true, categoryStatus: true,$or:[
-            { productName:{$regex:'.*'+search+'.*',$options:'i'}}
-          ] }).skip((currentPage)*perPage).limit(perPage).lean()
+        let productDetails = await products.find(query).sort(sortBy).skip((currentPage)*perPage).limit(perPage).lean()
+
         const categoryDetails = await categories.find({ status: true }).lean()
         if (req.session.userId) {
             let userId = req.session.userId
@@ -24,13 +48,24 @@ module.exports = {
             let countCart = 0;
             if (products) {
                 let productsss = products.cartItems
-                productDetails.forEach(element => {
+                productsss.forEach(element => {
                     countCart += element.quantity;
-                });
+                })
             }
-            res.render('user/shop', { user: true, categoryDetails, productDetails, userLogin: true, userShop: true, countCart, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)) })
-        } else {
-            res.render('user/shop', { user: true, categoryDetails, productDetails, userShop: true, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)) })
+
+            if(req.query.category){
+                res.json({ user: true, categoryDetails, productDetails, userShop: true, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)) ,checkLabel})
+            }else{
+
+            res.render('user/shop', { user: true, categoryDetails, productDetails, userLogin: true, userShop: true, countCart, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)),checkLabel })
+            }
+        } else {    
+            if(req.query.category){
+                res.json({ user: true, categoryDetails, productDetails, userShop: true, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)),checkLabel })
+            }else{
+
+                res.render('user/shop', { user: true, categoryDetails, productDetails, userShop: true, currentPage, totalProducts, pages: (Math.ceil(totalProducts / perPage)),checkLabel })
+            }
         }
 
     },
@@ -51,18 +86,6 @@ module.exports = {
                 res.render('user/categoryPage', { user: true, categoryDetails, productDetails, userShop: true })
             }
         
-    },
-    searchProducts:async(req,res)=>{
-
-        let search = req.query.searchProducts||''       
-        const searchProduct = await products.find({
-            productStatus:true,
-            categoryStatus:true,
-            $or:[
-              { productName:{$regex:'.*'+search+'.*',$options:'i'}}
-            ]
-        })
-        console.log(searchProducts);
     }
 
 

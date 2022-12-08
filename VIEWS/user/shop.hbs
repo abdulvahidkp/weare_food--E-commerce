@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/user/vendors/owl-carousel/owl.carousel.min.css">
   <link rel="stylesheet" href="/user/vendors/nouislider/nouislider.min.css">
 
+
   <link rel="stylesheet" href="/user/css/style.css">
 </head>
 
@@ -37,14 +38,14 @@
                 <li class="common-filter">
                   <form action="#">
                     <ul>
+                      <li class="filter-list"><input onclick="filterCategory('all')" class="pixel-radio " value="all"
+                          type="radio" id="category{{this._id}}" name="category" {{#if_eq checkLabel 'all'
+                          }}checked{{/if_eq}}><label for="category">All</label></li>
                       {{#each categoryDetails}}
-                      <li class="filter-list"><input class="pixel-radio" type="radio" id="men" name="brand"><label
-                          for="men">{{this.category}}<span> {{!-- (3600) --}}</span></label></li>
+                      <li class="filter-list"><input onclick="filterCategory('{{this._id}}')" class="pixel-radio"
+                          value="{{this._id}}" type="radio" id="category{{this._id}}" name="category"><label
+                          for="category{{this._id}}">{{this.category}}</label></li>
                       {{/each}}
-
-                      {{!-- <li class="filter-list"><input class="pixel-radio" type="radio" id="women"
-                          name="brand"><label for="women">Women<span> (3600)</span></label></li> --}}
-
                     </ul>
                   </form>
                 </li>
@@ -91,10 +92,10 @@
             <!-- Start Filter Bar -->
             <div class=" d-flex flex-wrap align-items-center  ">
               <div class="sorting">
-                <select style="border-width:0; color: grey; ">
-                  <option value="1">Default</option>
+                <select id="sortValue" style="border-width:0; color: grey; " onclick="sort()">
+                  <option   value="default">Default</option>
                   <option value="1">low to high</option>
-                  <option value="1">high to low</option>
+                  <option value="-1">high to low</option>
                 </select>
               </div>
               <div class="sorting mr-auto">
@@ -105,21 +106,20 @@
                 </select> --}}
               </div>
               <div>
-                <form action="">
-                <div class="input-group filter-bar-search">
-                  <input type="text" placeholder="Search" name="searchProduct">
-                  <div class="input-group-append">
-                    <button type="submit"><i class="ti-search"></i></button>
+                <form id="searchProductForm">
+                  <div class="input-group filter-bar-search">
+                    <input type="text" placeholder="Search" name="searchProduct">
+                    <div class="input-group-append">
+                      <button type="submit" ><i class="ti-search"></i></button>
+                    </div>
                   </div>
-                </div>
-
                 </form>
               </div>
             </div>
             <!-- End Filter Bar -->
             <!-- Start Best Seller -->
             <section class="lattest-product-area pb-40 category-list">
-              <div class="row">
+              <div class="row" id="productsee">
                 {{#each productDetails}}
                 <div class="col-6 col-lg-4">
                   <div class="card text-center card-product">
@@ -144,12 +144,10 @@
               </div>
             </section>
             <nav aria-label="Page navigation example">
-              <ul class="pagination float-right">
+              <ul class="pagination float-right" id="paginationId">
                 {{#times pages}}
-                <li class="page-item"><a class="page-link   {{#if_eq this currentPage}}active{{/if_eq}}"
-                    href="/shop/?page={{this}}">{{this}}</a></li>
+                <li class="page-item"><a class="page-link " onclick="pagination('{{this}}')">{{this}}</a></li>
                 {{/times}}
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
               </ul>
             </nav>
             <!-- End Best Seller -->
@@ -192,6 +190,212 @@
 
     <script>
 
+      function sort(){
+        let sort = document.getElementById('sortValue').value
+        let categoryId = $("input[name='category']:checked").val();
+        console.log(sort)
+        console.log(categoryId)
+        $.ajax({
+          url: '/shop',
+          data: {
+            category: categoryId,
+            sort: sort
+          },
+          method: 'GET',
+          success: (response) => {
+            console.log(response)
+            if (response.allproduct) {
+              location.reload()
+            } else {
+              console.log(response)
+              let productsDetails = ``
+              let pagination = ``
+              for (values of response.productDetails) {
+                productsDetails +=
+                  ` 
+             <div class="col-6 col-lg-4">
+    <div class="card text-center card-product">
+      <div class="card-product__img">
+        <img class="card-img" width="200" height="180" src="${values.image[0]}" alt="">
+        <ul class="card-product__imgOverlay">
+          <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
+          <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
+          <li><button onclick="addToWishlist('${values._id}')"><i class="ti-heart"></i></button></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <p></p>
+        <h4 class="card-product__title"><a href="/product/">${values.productName}</a></h4>
+        <p class="card-product__price">₹${values.productSellingPrice}
+          <strike>${values.productPrice}</strike>
+        </p>
+      </div>
+    </div>
+  </div>
+        `
+              }
+              for (let i = 1; i <= response.pages; i++) {
+                pagination +=
+                  `<li class="page-item"><a class="page-link" onclick="pagination('${i}')">${i}</a></li> `
+              }
+              document.getElementById('productsee').innerHTML = productsDetails
+              document.getElementById('paginationId').innerHTML = pagination
+            }
+          }
+        })
+      }
+
+   /*   $('#searchProductForm').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+          url: '/shop',
+          method: 'GET',
+          data: $('#searchProductForm').serialize(),
+          success: (response) => {
+            console.log(response)
+            console.log('its working')
+            let productsDetails = ``
+            let pagination = ``
+            for (values of response.productDetails) {
+              productsDetails +=
+                ` 
+             <div class="col-6 col-lg-4">
+    <div class="card text-center card-product">
+      <div class="card-product__img">
+        <img class="card-img" width="200" height="180" src="${values.image[0]}" alt="">
+        <ul class="card-product__imgOverlay">
+          <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
+          <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
+          <li><button onclick="addToWishlist('${values._id}')"><i class="ti-heart"></i></button></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <p></p>
+        <h4 class="card-product__title"><a href="/product/">${values.productName}</a></h4>
+        <p class="card-product__price">₹${values.productSellingPrice}
+          <strike>${values.productPrice}</strike>
+        </p>
+      </div>
+    </div>
+  </div>
+        `
+            }
+            for (let i = 1; i <= response.pages; i++) {
+              pagination +=
+                `<li class="page-item"><a class="page-link" onclick="pagination('${i}')">${i}</a></li> `
+            }
+            document.getElementById('productsee').innerHTML = productsDetails
+            document.getElementById('paginationId').innerHTML = pagination
+          }
+        })
+      })
+*/
+
+
+      function filterCategory(category) {
+        let sort = document.getElementById('sortValue').value
+        $.ajax({
+          url: '/shop',
+          data: {
+            category: category,
+            sort:sort
+          },
+          method: 'GET',
+          success: (response) => {
+            console.log(response)
+            if (response.allproduct) {
+              location.reload()
+            } else {
+              console.log(response)
+              let productsDetails = ``
+              let pagination = ``
+              for (values of response.productDetails) {
+                productsDetails +=
+                  ` 
+             <div class="col-6 col-lg-4">
+    <div class="card text-center card-product">
+      <div class="card-product__img">
+        <img class="card-img" width="200" height="180" src="${values.image[0]}" alt="">
+        <ul class="card-product__imgOverlay">
+          <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
+          <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
+          <li><button onclick="addToWishlist('${values._id}')"><i class="ti-heart"></i></button></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <p></p>
+        <h4 class="card-product__title"><a href="/product/">${values.productName}</a></h4>
+        <p class="card-product__price">₹${values.productSellingPrice}
+          <strike>${values.productPrice}</strike>
+        </p>
+      </div>
+    </div>
+  </div>
+        `
+              }
+              for (let i = 1; i <= response.pages; i++) {
+                pagination +=
+                  `<li class="page-item"><a class="page-link" onclick="pagination('${i}')">${i}</a></li> `
+              }
+              document.getElementById('productsee').innerHTML = productsDetails
+              document.getElementById('paginationId').innerHTML = pagination
+            }
+          }
+        })
+      } 
+
+
+
+      function pagination(paginationCount) {
+        let categoryId = $("input[name='category']:checked").val();
+        let sort = document.getElementById('sortValue').value
+        $.ajax({
+          url: '/shop',
+          data: {
+            category: categoryId,
+            page: paginationCount,
+            sort:sort
+          },
+          method: 'GET',
+          success: (response) => {
+            console.log(response)
+            console.log(response)
+            let productsDetails = ``
+            let pagination = ``
+            for (values of response.productDetails) {
+              productsDetails +=
+              ` <div class="col-6 col-lg-4">
+                <div class="card text-center card-product">
+                   <div class="card-product__img">
+                   <img class="card-img" width="200" height="180" src="${values.image[0]}" alt="">
+                   <ul class="card-product__imgOverlay">
+                   <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
+                   <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
+                   <li><button onclick="addToWishlist('${values._id}')"><i class="ti-heart"></i></button></li>
+                   </ul>
+                   </div>
+                <div class="card-body">
+                <p></p>
+                <h4 class="card-product__title"><a href="/product/">${values.productName}</a></h4>
+                <p class="card-product__price">₹${values.productSellingPrice}
+                <strike>${values.productPrice}</strike>
+                </p>
+               </div>
+              </div>
+            </div>  `
+            }
+            for (let i = 1; i <= response.pages; i++) {
+              pagination +=
+                `<li class="page-item"><a class="page-link" onclick="pagination('${i}')">${i}</a></li> `
+            }
+            document.getElementById('productsee').innerHTML = productsDetails
+            document.getElementById('paginationId').innerHTML = pagination
+          }
+        })
+      }
+
+
+
       function addToWishlist(proId) {
         fetch('/addWishlist', {
           method: 'POST',
@@ -199,7 +403,9 @@
           body: JSON.stringify({ proId })
         })
           .then(res => res.json())
-          .then(data => { console.log('success') })
+          .then(data => { 
+            swal("Added to wishlist",'item added', "success");
+            console.log('success') })
           .catch(error => {
             console.log(err.message)
             location.href = '/login'

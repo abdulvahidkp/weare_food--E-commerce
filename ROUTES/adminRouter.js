@@ -7,7 +7,6 @@ const bannerController = require('../CONTROLLERS/adminController/bannerControlle
 const couponController = require('../CONTROLLERS/adminController/couponController')
 const orderController = require('../CONTROLLERS/adminController/orderController')
 const uploadToFile = require('../MIDDLEWARE/multer')
-const { orderManagementGet } = require('../CONTROLLERS/adminController/orderController')
 const auth = require('../MIDDLEWARE/authentication').verifyLogin
 
 

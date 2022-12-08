@@ -42,7 +42,9 @@ module.exports = {
     getUserProfile: async (req, res) => {
         let userId = req.session.userId
         let address = await addresses.findOne({ userId: userId }).lean()
-        address = address.address
+        if(address){
+            address = address.address
+        }
         let user = await users.findOne({ _id: userId }).lean()
         let products = await carts.findOne({ userId: userId }).populate('cartItems.productId').lean()
         let countCart = 0;

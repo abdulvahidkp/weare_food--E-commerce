@@ -447,7 +447,7 @@ a {
 .nav-shop li button .nav-shop__circle {
     font-size: 9px;
     display: inline-block;
-    background: #384aeb;
+    background: #633504;
     color: #fff;
     padding: 0px 5px;
     border-radius: 50%;
@@ -2601,7 +2601,7 @@ a {
 .sidebar-categories .head {
     font-family: 'Oswald', sans-serif;
     line-height: 50px;
-    background: #384aeb;
+    background: #7B3F00;
     padding: 0 30px;
     font-size: 18px;
     font-weight: 400;
@@ -2626,7 +2626,7 @@ a {
 }
 
 .sidebar-categories .main-nav-list a:hover {
-    color: #384aeb
+    color: #7B3F00
 }
 
 .sidebar-categories .main-nav-list a .number {
@@ -2650,7 +2650,7 @@ a {
 .sidebar-filter .top-filter-head {
     font-family: 'Oswald', sans-serif;
     line-height: 50px;
-    background: #384aeb;
+    background: #7B3F00;
     padding: 0 30px;
     font-size: 18px;
     font-weight: 400;
@@ -2780,7 +2780,7 @@ a {
 }
 
 .pixel-radio:checked {
-    border: 8px solid #384aeb
+    border: 8px solid #7B3F00
 }
 
 .pixel-radio:checked::after {
@@ -4095,7 +4095,7 @@ a {
     height: 40px;
     line-height: 38px;
     text-transform: uppercase;
-    background: #384aeb;
+    background: #633504;
     padding: 0px 38px;
     margin-right: 5px;
     margin-left: 10px;
@@ -4151,7 +4151,7 @@ a {
     height: 10px;
     width: 10px;
     border-radius: 50%;
-    background: #384aeb;
+    background: #633504;
     display: inline-block;
     position: absolute;
     right: 3px;
@@ -4228,7 +4228,7 @@ a {
     padding: 0px 44px;
     line-height: 38px;
     text-transform: capitalize;
-    background: #384aeb;
+    background: #633504;
     border-radius: 30px;
     color: #fff;
     font-weight: 500
@@ -4757,7 +4757,6 @@ a {
     height: 28px;
     line-height: 28px;
     text-align: center;
-    background: #384aeb;
     color: #ffffff;
     border-radius: 20px
 }

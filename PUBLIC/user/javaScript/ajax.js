@@ -5,7 +5,7 @@ function addToCart(proId) {
         url: '/addToCart/' + proId,
         method: 'post',
         success: (response) => {
-            if (response.status) {
+            if (response.status) {   
                 let count = $('#cart-count').html()
                 count = parseInt(count) + 1
                 $('#cart-count').html(count)
@@ -19,7 +19,7 @@ function changeQuantity(proId, count) {
     $.ajax({
         url: '/changeProductQuantity',
         data: {
-            proId: proId, 
+            proId: proId,
             count: count
         },
         method: 'POST',
@@ -149,7 +149,7 @@ $('#placeOrderForm').submit((e) => {
             }
             if (response.codSuccess) {
                 location.href = '/confirmation'
-            } else if(response.status){
+            } else if (response.status) {
                 razorPayment(response)
             }
         }
@@ -165,12 +165,12 @@ function razorPayment(order) {
         'description': 'weare food cash transaction',
         'order_id': order.id,
         'handler': (response) => {
-            verifyPayment(response,order)
+            verifyPayment(response, order)
         },
         'prefill': {
-            'name': 'user', 
-            'contact': '9999999999',  
-            'email':'user@gmail.com'
+            'name': 'user',
+            'contact': '9999999999',
+            'email': 'user@gmail.com'
         },
         'notes': {
             'address': 'Razorpay Corporate Office'
@@ -184,18 +184,18 @@ function razorPayment(order) {
 
 }
 
-function verifyPayment(payment,order){
+function verifyPayment(payment, order) {
     $.ajax({
-        url:'/verifyPayment',
-        data:{
+        url: '/verifyPayment',
+        data: {
             payment,
             order
         },
-        method:'post',
-        success:(response)=>{ 
-            if(response.status){
+        method: 'post',
+        success: (response) => {
+            if (response.status) {
                 location.href = '/confirmation'
-            }else{
+            } else {
                 alert('payment failed')
             }
         }
@@ -203,16 +203,23 @@ function verifyPayment(payment,order){
 }
 
 
-$('#changeOrderStatus').submit((e)=>{
+$('#changeOrderStatus').submit((e) => {
     console.log('helo');
     e.preventDefault()
     $.ajax({
-        url:'/admin/changeOrderStatus',
-        method:'post',
-        data:$('#changeOrderStatus').serialize(),
-        success:(response) => {
+        url: '/admin/changeOrderStatus',
+        method: 'post',
+        data: $('#changeOrderStatus').serialize(),
+        success: (response) => {
             alert('order changed successfully')
         }
     })
 })
 
+
+
+
+
+//filter and pagination
+
+    

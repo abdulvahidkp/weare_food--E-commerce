@@ -10,6 +10,7 @@ let logMsg = ''
 let signupUser;
 let signupEmail;
 let signupPassword;
+let OTP;
 const nodemailer = require('nodemailer')
 // run()
 // async function run() {
@@ -30,29 +31,21 @@ let mailTransporter = nodemailer.createTransport({
         pass: "vnywjqofxvivbuqv",
     },
 });
-const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
+ 
 
 
 
 module.exports = {
     homePage: async (req, res) => {
-        await products.find({}).populate({ path: 'productCategory', match: { status: true } }).lean().exec(async (err, products) => {
-            let productDetail = products.filter((products) => {
-                return products.productCategory
-            })
+        let productDetails = await products.find({productStatus:true,categoryStatus:true}).sort({_id:-1}).limit(8).lean()
             const category = await categorySchema.find({ status: true }).lean()
             const banner = await bannerSchema.findOne().lean()
-            let productDetails = productDetail.filter((product)=>{
-                return product.productStatus 
-            })
 
             if (req.session.userId) {
-
                 let userId = req.session.userId
                 // let wishlistDetails = await wishlist.findOne({userId:userId}).populate('productId')
                 // let productsInCart = wishlistDetails.productId
                 // let countCart = productsInCart.length
-
                 let cartProducts = await carts.findOne({userId:userId}).populate('cartItems.productId').lean()
                 let countCart = 0;
                 if(cartProducts){
@@ -60,14 +53,13 @@ module.exports = {
                         productDetail.forEach(element => {
                           countCart += element.quantity;
                         });
-                    }   
-
+                    }  
                 res.render('user/userHome', { user: true, userLogin: true, userHome: true, category, banner,data:productDetails, countCart})
             } else {
                 res.render('user/userHome', { user: true, userHome: true, category, banner ,data:productDetails})
             }
         
-        })  
+        
         // const category = await categorySchema.find({ status: true }).lean()
         // const banner = await bannerSchema.findOne().lean()
     },
@@ -118,6 +110,7 @@ module.exports = {
         signupName = req.body.name
         signupEmail = req.body.email
         signupPassword = await bcrypt.hash(req.body.password, 10)
+        OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
         let mailDetails = {
             from: "abdulvahid1117@gmail.com",
             to: signupEmail,
