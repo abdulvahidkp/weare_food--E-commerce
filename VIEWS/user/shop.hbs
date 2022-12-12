@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Weare Shop</title>
+	<link rel="icon" href="/user/img/Fevicon.jpg" type="image/png">
   <link rel="stylesheet" href="/user/vendors/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="/user/vendors/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="/user/vendors/themify-icons/themify-icons.css">
@@ -52,40 +54,27 @@
               </ul>
             </div>
             <div class="sidebar-filter">
-              <div class="top-filter-head">Product Filters</div>
+              {{!-- <div class="top-filter-head">Product Filters</div> --}}
 
 
-              <div class="common-filter">
+              {{!-- <div class="common-filter">
                 <div class="head">price</div>
                 <form action="#">
                   <ul>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label
-                        for="black">below ₹200<span>{{!-- (29) --}}</span></label></li>
+                        for="black">below ₹200<span></span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather"
                         name="color"><label for="balckleather">
-                        below ₹500<span>{{!-- (29) --}}</span></label></li>
+                        below ₹500<span></span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label
                         for="blackred">
-                        below ₹700<span>{{!-- (19) --}}</span></label></li>
+                        below ₹700<span></span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label
-                        for="gold">below ₹1000<span>{{!-- (19) --}}</span></label></li>
+                        for="gold">below ₹1000<span></span></label></li>
                   </ul>
                 </form>
-              </div>
-              {{!-- <div class="common-filter">
-                <div class="head">Price</div>
-                <div class="price-range-area">
-                  <div id="price-range"></div>
-                  <div class="value-wrapper d-flex">
-                    <div class="price">Price:</div>
-                    <span>$</span>
-                    <div id="lower-value"></div>
-                    <div class="to">to</div>
-                    <span>$</span>
-                    <div id="upper-value"></div>
-                  </div>
-                </div>
               </div> --}}
+              
             </div>
           </div>
           <div class="col-xl-9 col-lg-8 col-md-7">
@@ -124,11 +113,11 @@
                 <div class="col-6 col-lg-4">
                   <div class="card text-center card-product">
                     <div class="card-product__img">
-                      <img class="card-img" width="200" height="180" src="{{this.image.[0]}}" alt="">
+                      <img class="card-img" width="" height="" src="{{this.image.[0]}}" alt="">
                       <ul class="card-product__imgOverlay">
-                        <li><a href="/product/{{this._id}}"><button><i class="ti-search"></i></button></a></li>
+                        <li><a href="/product/{{this._id}}" ><button><i class="ti-search"></i></button></a></li>
                         <li><button onclick="addToCart('{{this._id}}')"><i class="ti-shopping-cart"></i></button></li>
-                        <li><button onclick="addToWishlist('{{this._id}}')"><i class="ti-heart"></i></button></li>
+                        <li><button onclick="addToWishlist('{{this._id}}')" id="wishlistColour{{this._id}}"  {{#if this.wishlist}}style="background-color:#7B3F00;"{{/if}}><i class="ti-heart"></i></button></li>
                       </ul>
                     </div>
                     <div class="card-body">
@@ -216,11 +205,11 @@
              <div class="col-6 col-lg-4">
     <div class="card text-center card-product">
       <div class="card-product__img">
-        <img class="card-img" width="200" height="180" src="${values.image[0]}" alt="">
+        <img class="card-img" width="" height="" src="${values.image[0]}" alt="">
         <ul class="card-product__imgOverlay">
           <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
           <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
-          <li><button onclick="addToWishlist('${values._id}')"><i class="ti-heart"></i></button></li>
+          <li><button onclick="addToWishlist('${values._id}')" id="wishlistColour${values._id}"  ${values.wishlist?style="background-color:#7B3F00":style='background-color:'}><i class="ti-heart"></i></button></li>
         </ul>
       </div>
       <div class="card-body">
@@ -302,7 +291,6 @@
           },
           method: 'GET',
           success: (response) => {
-            console.log(response)
             if (response.allproduct) {
               location.reload()
             } else {
@@ -367,11 +355,11 @@
               ` <div class="col-6 col-lg-4">
                 <div class="card text-center card-product">
                    <div class="card-product__img">
-                   <img class="card-img" width="200" height="180" src="${values.image[0]}" alt="">
+                   <img class="card-img" width="" height="" src="${values.image[0]}" alt="">
                    <ul class="card-product__imgOverlay">
                    <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
                    <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
-                   <li><button onclick="addToWishlist('${values._id}')"><i class="ti-heart"></i></button></li>
+                   <li><button onclick="addToWishlist('${values._id}')" id="wishlistColour${values._id}"  ${values.wishlist?style="background-color:#7B3F00":style='background-color:'} ><i class="ti-heart"></i></button></li>
                    </ul>
                    </div>
                 <div class="card-body">

@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Weare Shop</title>
+	<link rel="icon" href="/user/img/Fevicon.jpg" type="image/png">
 	<link rel="stylesheet" href="/user/vendors/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="/user/vendors/fontawesome/css/all.min.css">
 	<link rel="stylesheet" href="/user/vendors/themify-icons/themify-icons.css">
@@ -53,20 +54,12 @@
 								<li><a href="#"><span>Availibility</span> : In Stock</a></li>
 							</ul>
 							<p>{{data.productDescription}}</p>
-							<div class="product_count">
-								<label for="qty">Quantity:</label>
-								<button
-									onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-									class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
-								<input type="text" name="qty" id="sst" size="2" maxlength="12" value="1"
-									title="Quantity:" class="input-text qty">
-								{{!-- <button
-									onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-									class="reduced items-count" type="button"><i class="ti-angle-right"></i></button> --}}
+							<div class="product_count card_area">
+								
 								<a class="button primary-btn" href="#" onclick="addToCart('{{data._id}}')">Add to Cart</a>
-							</div>
-							<div class="card_area d-flex align-items-center">
-								<a class="icon_btn" onclick="addToWishlist('{{data._id}}')"><i class="lnr lnr lnr-heart"></i></a>
+							{{!-- <div class="card_area "> --}}
+								<a class="icon_btn " onclick="addToWishlist('{{data._id}}')" id="wishlistColourSingle{{data._id}}" {{#if data.wishlist}}style="background-color:#7B3F00"{{/if}}><i class="lnr lnr lnr-heart"></i></a>
+							{{!-- </div> --}}
 							</div>
 						</div>
 					</div>

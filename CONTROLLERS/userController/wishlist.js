@@ -10,7 +10,6 @@ module.exports = {
     getWishlist: async (req, res) => {
         const { userId } = req.session
         let wishListExist = await wishlist.find({ userId,productId: { $exists: true, $not: {$size: 0} } }).count()
-
         let products = await carts.findOne({userId:userId}).populate('cartItems.productId').lean()
         let countCart = 0;
         if(products){

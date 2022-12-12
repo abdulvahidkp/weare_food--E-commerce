@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Weare Shop</title>
-    <link rel="icon" href="admin/img/Fevicon.jpg" type="image/png">
+   <title>Weare Shop</title>
+	<link rel="icon" href="/user/img/Fevicon.jpg" type="image/png">
     <link rel="stylesheet" href="/user/vendors/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/user/vendors/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="/user/vendors/themify-icons/themify-icons.css">
@@ -144,9 +144,9 @@
                                 <button type="button" class="btn rounded-pill border-secondary float-left mt-3 mb-3"
                                     data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
                             </div>
-                            <div>
+                            {{!-- <div>
                                 <a class="ml-2" href="/changePass"></a>
-                            </div>
+                            </div> --}}
 
                         </form>
 
@@ -154,7 +154,7 @@
                             <div class="col-lg-8">
 
                                 {{#if data}}
-                                <div class="order_box">
+                                <div class="order_box ">
                                     <h2>Adresses </h2>
                                     {{#each data}}
                                     <div class="payment_item">
@@ -187,9 +187,10 @@
                     </div>
                 </div>
             </div>
-
-            <button type="button" class="btn rounded-pill border-secondary float-left mt-3 mb-3" data-toggle="modal"
+            <div style="margin-bottom: 65px;">
+            <button type="button" class="btn rounded-pill border-secondary float-left mt-3 mb-3" style="margin-bottom: 1cm;" data-toggle="modal"
                 data-target="#exampleModal">add new address</button>
+                </div>
 
             <form action='/addAddressProfile' method="post">
                 <!--newAddress Modal -->

@@ -17,4 +17,3 @@ const uploadToFile = multer({
 })
 
 module.exports = uploadToFile
-

@@ -28,7 +28,6 @@
 	<!--================ User partial header =================-->
 
   <main class="site-main">
-    
     <!--================ Hero banner start =================-->
     <section class="hero-banner">
       <div class="container">
@@ -81,13 +80,7 @@
         </div>
       </div>
     </section>
-    <script>
-      window.addEventListener('touchstart', function(event) {
-    // some logic
-    event.preventDefault(); // <-- that should not be used in passive
-    // some other magic
-});
-    </script>
+  
 
 
     <!--================ Hero Carousel start =================-->
@@ -131,14 +124,14 @@
           {{#each data}}
           <div class="col-6 col-lg-4 col-xl-3">
             <div class="card text-center card-product">
-              <div class="card-product__img">
-                <img class="card-img" width="" height="" src="{{this.image.[0]}}" alt="">
+              <div class="card-product__img"><a href="/product/{{this._id}}">
+                <img class="card-img" width="" height="" src="{{this.image.[0]}}" alt=""></a>
                 
               </div>
               <div class="card-body">
                 <p>{{this.productCategory.category}}</p>
                 <h4 class="card-product__title"><a href="/product/{{this._id}}">{{this.productName}}</a></h4>
-                <p class="card-product__price">₹{{this.productPrice}}</p>
+                <p class="card-product__price">₹{{this.productSellingPrice}}</p>
               </div>
             </div>
           </div>
@@ -173,7 +166,7 @@
 
 
     <!-- ================ Subscribe section start ================= --> 
-    <section class="subscribe-position">
+    {{!-- <section class="subscribe-position">
       <div class="container">
         <div class="subscribe text-center">
           <h3 class="subscribe__title">Get Update From Anywhere</h3>
@@ -194,7 +187,7 @@
           
         </div>
       </div>
-    </section>
+    </section> --}}
     <!-- ================ Subscribe section end ================= --> 
 
     

@@ -13,8 +13,7 @@ module.exports = {
             });
         }
         let userOrders = await orders.findOne({userId:userId}).lean()
-        console.log(userOrders)
-        let orderDetails
+        let orderDetails;
         if(userOrders){
              orderDetails = userOrders.orderDetails;
             orderDetails.forEach(e=>{
@@ -28,7 +27,6 @@ module.exports = {
         let userId = req.session.userId
         let orderId = req.params.id
         let order = await orders.findOne({userId:userId},{orderDetails:{$elemMatch:{_id:orderId}}}).populate('orderDetails.orderItems.productId').lean()
-        console.log(order);        
         let orderedProducts = order.orderDetails[0].orderItems
 
         let products = await carts.findOne({ userId: userId }).populate('cartItems.productId').lean()

@@ -1,18 +1,18 @@
 const cloudinary = require("cloudinary").v2;
 const fs = require('fs')
+require('dotenv/config')
 
 //cloudinary configaration
 cloudinary.config({
-    cloud_name: 'desr7slhc',
-    api_key: '235693447949737',
-    api_secret: 'f8pHE6X6tYLJkwURY8LnqT3yWmw'
+    cloud_name: process.env.CLOUDNAME,
+    api_key: process.env.APIKEY,
+    api_secret: process.env.APISECRET
 });
 
 // locaFilePath: path of image which was just uploaded to "uploads" folder , its sending when calling this function
 const uploadToCloudinary = async (localFilePath) => {
     // filePathOnCloudinary: path of image we want to set when it is uploaded to cloudinary
     const filePathOnCloudinary = "main" + "/" + localFilePath;
-    console.log('near');
     cloudinary.image(localFilePath,{quality:'auto',fetch_format:'auto'})
     return cloudinary.uploader.upload(localFilePath,{ public_id: filePathOnCloudinary }).then((result) => {
         fs.unlinkSync(localFilePath);

@@ -3,6 +3,7 @@ let carts = require('../../MODEL/cartModel')
 let users = require('../../MODEL/userModel')
 let addresses = require('../../MODEL/addressModel')
 const orders = require('../../MODEL/orderModel')
+const wishlists = require('../../MODEL/wishlistModel')
 module.exports = {
     getProduct: async (req, res) => {
         let proId = req.params.id
@@ -16,6 +17,15 @@ module.exports = {
                 productDetail.forEach(element => {
                     countCart += element.quantity;
                 });
+            }
+            let wishlistPro = await wishlists.findOne({userId:userId})
+            if(wishlistPro){
+                wishlistPro = wishlistPro.productId
+                wishlistPro.forEach(f=>{
+                    if(productDetails._id.equals(f)){
+                        productDetails.wishlist = true
+                    }
+                })
             }
             res.render('user/singleProduct', { user: true, data: productDetails, userLogin: true, userShop: true, countCart })
         } else {
@@ -62,7 +72,6 @@ module.exports = {
         await users.updateOne({ _id: userId }, { name, mobile, gender }).then((response) => {
             res.redirect('/userProfile')
         })
-
     },
     addNewAddress: async (req, res) => {
         let userId = req.session.userId

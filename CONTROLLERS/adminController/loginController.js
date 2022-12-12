@@ -47,7 +47,6 @@ module.exports = {
         const categoryCount = await categories.find().count()
         const productCount = await products.find().count()
         const userCount = await users.find().count()
-
         const hell = await orders.aggregate([
             {
                 $project: {
@@ -66,7 +65,6 @@ module.exports = {
         // console.log(hell[0].orderDetails[0]);
         
         let orderCount= 0;
-
         let pendingCount = 0;
         let placeOrderCount = 0;
         let packedCount = 0;

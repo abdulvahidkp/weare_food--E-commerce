@@ -2,13 +2,13 @@ const carts = require('../../MODEL/cartModel')
 const addresses = require('../../MODEL/addressModel')
 const orders = require('../../MODEL/orderModel')
 const Razorpay = require('razorpay');
-const { rejects } = require('assert');
+require('dotenv/config')
 
 let total;
 
 var razorpayInstance = new Razorpay({
-    key_id: 'rzp_test_byX4xjQdkJOyzX',
-    key_secret: 'GwkQn36GPCizkzfcgmLcsFBN',
+    key_id: process.env.RAZORPAY_KEYID,
+    key_secret: process.env.RAZORPAY_SECRET,
 });
 
 
@@ -56,7 +56,6 @@ module.exports = {
             } else {
                 await addresses.create({ userId: userId, address: { name, mobile, houseName, district, state, pincode } })
             }
-
             res.redirect('/checkout')
         })
     },

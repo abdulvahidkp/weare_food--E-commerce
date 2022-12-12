@@ -6,10 +6,10 @@ const userController = require('../CONTROLLERS/adminController/userController')
 const bannerController = require('../CONTROLLERS/adminController/bannerController')
 const couponController = require('../CONTROLLERS/adminController/couponController')
 const orderController = require('../CONTROLLERS/adminController/orderController')
+const pdfController = require('../CONTROLLERS/adminController/pdfController')
 const uploadToFile = require('../MIDDLEWARE/multer')
 const auth = require('../MIDDLEWARE/authentication').verifyLogin
- 
- 
+
  
 router.get('/',adminController.loginGet)
 router.post('/',adminController.loginPost)
@@ -35,6 +35,7 @@ router.get('/couponAction',couponController.couponAction)
 router.get('/orderManagement',orderController.orderManagementGet)
 router.get("/orderedProductDetails/:id",orderController.singleOrderDetails)
 router.post('/changeOrderStatus',orderController.changeOrderStatus)
+router.get('/generatePdf',pdfController.generatePdf)
 router.get('/logout',adminController.logout)
 
 module.exports = router

@@ -1,6 +1,7 @@
 const categories = require('../../MODEL/categoryModel')
 const products = require('../../MODEL/productModel')
 let carts = require('../../MODEL/cartModel')
+const wishlists = require('../../MODEL/wishlistModel')
 
 module.exports = {
     categoryPage: async (req, res) => {
@@ -34,15 +35,25 @@ module.exports = {
                 { productName:{$regex:'.*'+req.query.searchProduct+'.*',$options:'i'}}
               ]
         }
-        const perPage = 6;
+        const perPage = 9;
         let totalProducts = await products.find(query).lean().count()
         
         let productDetails = await products.find(query).sort(sortBy).skip((currentPage)*perPage).limit(perPage).lean()
         
-
         const categoryDetails = await categories.find({ status: true }).lean()
         if (req.session.userId) {
             let userId = req.session.userId
+            let wishlistPro = await wishlists.findOne({userId:userId})
+            if(wishlistPro){
+                wishlistPro = wishlistPro.productId
+                productDetails.forEach(e=>{
+                    wishlistPro.forEach(f=>{
+                        if(e._id.equals(f)){
+                            e.wishlist = true
+                        }
+                    })
+                })
+            }
             let products = await carts.findOne({ userId: userId }).populate('cartItems.productId').lean()
             let countCart = 0;
             if (products) {
@@ -65,27 +76,7 @@ module.exports = {
             }
         }
 
-    },
-    singleCategoryPage: async (req, res) => {
-        const catId = req.params.id
-
-        let productDetail = await products.find({ productStatus: true, categoryStatus: true }).lean()
-
-            const categoryDetails = await categories.find({ status: true }).lean()
-
-            let productDetails = productDetail.filter((product) => {
-                return product.productStatus
-            })
-
-            if (req.session.userId) {
-                res.render('user/categoryPage', { user: true, categoryDetails, productDetails, userLogin: true, userShop: true })
-            } else {
-                res.render('user/categoryPage', { user: true, categoryDetails, productDetails, userShop: true })
-            }
-        
     }
-
-
     // searchProducts: async (req, res) => {
 
     //     const page = parseInt(req.query.page)-1||0

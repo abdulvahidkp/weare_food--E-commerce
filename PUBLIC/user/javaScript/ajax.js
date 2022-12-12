@@ -9,6 +9,8 @@ function addToWishlist(proId) {
         if(data.alreadyExist){
           swal("Product already in wishlist")
         }else{
+        $("#wishlistColour"+proId).css("background-color","#7B3F00"); 
+        $('#wishlistColourSingle'+proId).css("background-color","#7B3F00"); 
         swal("", "Product added to wishlist", "success")
         console.log('success') }
         })
@@ -25,18 +27,29 @@ function addToWishlist(proId) {
   }
 
 function removeWishlist(proId) {
-    fetch('/removeWishlist', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ proId })
+
+   swal({
+      title:"Remove Item",
+      text:"Do you want to remove the item from wishlist",
+      icon:'warning',
+      buttons:["Cancel","remove"]
+    }).then((ok)=>{
+        if(ok){
+            fetch('/removeWishlist', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ proId })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    location.reload()
+                })
+                .catch(e => console.log(e))
+                .finally(() => console.log('all done'))
+        }
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            location.reload()
-        })
-        .catch(e => console.log(e))
-        .finally(() => console.log('all done'))
+
 }
 
 
@@ -111,18 +124,27 @@ function changeQuantity(proId, count) {
 
 
 function removeFromCart(proId) {
-    $.ajax({
-        url: '/removeProductCart',
-        data: {
-            proId: proId
-        },
-        method: 'POST',
-        success: (response) => {
-            console.log('done');
-            location.reload()
-            // $('#productRow').del
-        }
-    })
+    swal({
+        title:"Remove?",
+        text:"Do you want to remove this item from cart",
+        icon:'warning',
+        buttons:["Cancel","Yes"]
+      }).then((ok)=>{
+            if(ok){
+                $.ajax({
+                    url: '/removeProductCart',
+                    data: {
+                        proId: proId
+                    },
+                    method: 'POST',
+                    success: (response) => {
+                        console.log('done');
+                        location.reload()
+                        // $('#productRow').del
+                    }
+                })
+            }
+      })
 }
 
 let applied = false;
@@ -261,7 +283,6 @@ function verifyPayment(payment, order) {
 
 
 $('#changeOrderStatus').submit((e) => {
-    console.log('helo');
     e.preventDefault()
     $.ajax({
         url: '/admin/changeOrderStatus',

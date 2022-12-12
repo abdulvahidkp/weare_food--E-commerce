@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const PORT = 3000;
+require('dotenv/config')
 const userRouter = require('./ROUTES/userRouter')
 const adminRouter = require('./ROUTES/adminRouter');
 const hbs = require('express-handlebars')
@@ -10,14 +10,13 @@ const cookieParser = require('cookie-parser')
 const fs = require('fs')
 const logger = require('morgan')
 
-
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(session({
     secret:'thisismysecretkey',
     saveUninitialized:true,
-    cookie:{maxAge:777777}, 
+    cookie:{maxAge:1000000}, //one hour
     resave: false
 }))
 app.use((req, res, next) => {
@@ -76,4 +75,4 @@ Handlebars.registerHelper('ifnoteq', function (a, b, options) {
 app.use('/',userRouter)
 app.use('/admin',adminRouter)
 
-app.listen(PORT,()=>console.log('server connected to',PORT));
+app.listen(process.env.PORT,()=>console.log('server connected to',process.env.PORT));

@@ -5,6 +5,7 @@ const bannerSchema = require('../../MODEL/bannerModel')
 const wishlist = require('../../MODEL/wishlistModel')
 const products = require('../../MODEL/productModel')
 const carts = require('../../MODEL/cartModel')
+require('dotenv/config')
 let otpMsg = ''
 let logMsg = ''
 let signupUser;
@@ -27,14 +28,11 @@ const nodemailer = require('nodemailer')
 let mailTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: "abdulvahid1117@gmail.com",
-        pass: "vnywjqofxvivbuqv",
+        user: process.env.MYEMAIL,
+        pass: process.env.MYPASS,
     },
 });
  
-
-
-
 module.exports = {
     homePage: async (req, res) => {
         let productDetails = await products.find({productStatus:true,categoryStatus:true}).sort({_id:-1}).limit(8).lean()
@@ -115,7 +113,7 @@ module.exports = {
         signupPassword = await bcrypt.hash(req.body.password, 10)
         OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
         let mailDetails = {
-            from: "abdulvahid1117@gmail.com",
+            from: process.env.MYEMAIL,
             to: signupEmail,
             subject: "WEARE_FOODS ACCOUNT REGISTRATION",
             html: `<p>YOUR OTP FOR REGISTERING IN WEARE FOODS IS ${OTP}</p>`,

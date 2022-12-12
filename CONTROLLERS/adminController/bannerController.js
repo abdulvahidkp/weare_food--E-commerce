@@ -1,4 +1,6 @@
 const banners = require('../../MODEL/bannerModel')
+const uploadToCloudinary = require('../../MIDDLEWARE/cloundinary')
+
 const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs')
@@ -13,22 +15,21 @@ module.exports = {
     },
     addBannerPost: async (req, res) => {
 
-        
-
-        let compressedImageFileSavePath = path.join(__dirname, '../../uploads', new Date().getTime() + req.file.originalname)
+        // let compressedImageFileSavePath = path.join(__dirname, '../../uploads', new Date().getTime() + req.file.originalname)
         const filePath = req.file.path
 
-        let comImg = sharp(filePath)
-            .resize(900)
-            .jpeg({ quality: 80, chromaSubsampling: '4:4:4' })
-            .toFile(compressedImageFileSavePath, async (err, info) => {
-                await fs.unlinkSync(filePath)
-            })
+        // let comImg = sharp(filePath)
+        //     .resize(900)
+        //     .jpeg({ quality: 80, chromaSubsampling: '4:4:4' })
+        //     .toFile(compressedImageFileSavePath, async (err, info) => {
+        //         await fs.unlinkSync(filePath)
+        //     })
+        const result = await uploadToCloudinary(filePath)
 
-        localFilePath = comImg.options.fileOut;
-        let parent = path.basename(path.dirname(localFilePath))
-        const lastItem = localFilePath.substring(localFilePath.lastIndexOf('/') + 1)
-        newPath = '/' + parent + '/' + lastItem
+        // localFilePath = comImg.options.fileOut;
+        // let parent = path.basename(path.dirname(localFilePath))
+        // const lastItem = localFilePath.substring(localFilePath.lastIndexOf('/') + 1)
+        // newPath = '/' + parent + '/' + lastItem
 
         let mainHead = req.body.main
         let newMainHead = mainHead.toUpperCase()
@@ -40,8 +41,7 @@ module.exports = {
         const newPara = reqPara.toLowerCase()
         try {
             await banners.findOneAndDelete({})
-            await banners.create({ mainHead: newMainHead, subHead:newSub,paragraph:newPara, imagePath: newPath })
-            console.log('Banner added');
+            await banners.create({ mainHead: newMainHead, subHead:newSub,paragraph:newPara, imagePath: result.url })
             res.redirect('/admin/banner')
         } catch (error) {
             console.log(error.message)

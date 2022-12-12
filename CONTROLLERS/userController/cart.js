@@ -29,7 +29,6 @@ module.exports = {
     addToCart: async (req, res) => {
         let userId = req.session.userId
         let proId = req.params.id
-        console.log('proId',proId)
         let cartExist = await carts.findOne({ userId: userId })
         if (cartExist) {
             let products = cartExist.cartItems
