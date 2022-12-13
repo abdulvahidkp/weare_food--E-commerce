@@ -113,7 +113,8 @@
                 <div class="col-6 col-lg-4">
                   <div class="card text-center card-product">
                     <div class="card-product__img">
-                      <img class="card-img" width="" height="" src="{{this.image.[0]}}" alt="">
+                      <img class="card-img" style="width: 100%;
+  height: auto;" src="{{this.image.[0]}}" alt="">
                       <ul class="card-product__imgOverlay">
                         <li><a href="/product/{{this._id}}" ><button><i class="ti-search"></i></button></a></li>
                         <li><button onclick="addToCart('{{this._id}}')"><i class="ti-shopping-cart"></i></button></li>
@@ -205,7 +206,8 @@
              <div class="col-6 col-lg-4">
     <div class="card text-center card-product">
       <div class="card-product__img">
-        <img class="card-img" width="" height="" src="${values.image[0]}" alt="">
+        <img class="card-img" style="width: 100%;
+  height: auto;" src="${values.image[0]}" alt="">
         <ul class="card-product__imgOverlay">
           <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
           <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
@@ -355,7 +357,7 @@
               ` <div class="col-6 col-lg-4">
                 <div class="card text-center card-product">
                    <div class="card-product__img">
-                   <img class="card-img" width="" height="" src="${values.image[0]}" alt="">
+                   <img class="card-img" style="width: 100%;height: auto;" src="${values.image[0]}" alt="">
                    <ul class="card-product__imgOverlay">
                    <li><a href="/product/${values._id}"><button><i class="ti-search"></i></button></a></li>
                    <li><button onclick="addToCart('${values._id}')"><i class="ti-shopping-cart"></i></button></li>
